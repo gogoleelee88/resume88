@@ -1,0 +1,658 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --background-color: #f9f9f9;
+            --text-color: #333;
+            --text-color-secondary: #555;
+            --container-bg: #f5f5f5;
+            --border-color: #000;
+            --button-bg: #696965;
+            --button-text: #fff8dc;
+            --box-shadow: rgba(0,0,0,0.05);
+            --header-border: #000;
+        }
+
+        [data-theme="dark"] {
+            --background-color: #1a1a1a;
+            --text-color: #fff;
+            --text-color-secondary: #ccc;
+            --container-bg: #2d2d2d;
+            --border-color: #fff;
+            --button-bg: #4a4a4a;
+            --button-text: #fff;
+            --box-shadow: rgba(255,255,255,0.05);
+            --header-border: #fff;
+        }
+
+        .theme-switch-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 20px;
+        }
+
+        .theme-switch {
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            position: relative;
+            margin-left: 10px;
+        }
+
+        .theme-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .theme-switch-wrapper span {
+            margin-right: 10px;
+            font-size: 1rem;
+        }
+
+        .fa-moon {
+            color: #f1c40f;
+        }
+
+        .fa-sun {
+            color: #f39c12;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: var(--background-color);
+            margin-top: 40px;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        header {
+            border-bottom: 300px solid var(--header-border);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .skill-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+            background-color: var(--container-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 2px 4px var(--box-shadow);
+        }
+
+        .skill-container img {
+            width: 180px;
+            height: 180px;
+            margin-right: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--border-color);
+        }
+
+        .skill-container .text {
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .skill-container h1 {
+            margin: 0 0 10px 0;
+            color: var(--text-color);
+        }
+
+        .skill-container h2 {
+            margin: 0 0 15px 0;
+            color: var(--text-color-secondary);
+            font-weight: 500;
+        }
+
+        .skill-container p {
+            margin: 0;
+            color: var(--text-color-secondary);
+            line-height: 1.6;
+        }
+
+        .logo-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            color: var(--button-text);
+            font-weight: 500;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-link:hover {
+            transform: translateY(-2px);
+        }
+
+        .logo-link.notion { background-color: #000000; }
+        .logo-link.velog { background-color: #1a1a1a; }
+        .logo-link.github { background-color: #333333; }
+        .logo-link.email { background-color: #4d4d4d; }
+
+        .right-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .right-section .text-content {
+            width: 40%;
+            padding-right: 20px;
+        }
+
+        .text-content .section {
+            margin-bottom: 60px;
+        }
+
+        .text-content h1 {
+            color: var(--text-color);
+        }
+
+        .text-content h2 {
+            margin: 0 0 15px 0;
+            color: var(--text-color-secondary);
+            font-weight: normal;
+            font-size: 0.95em;
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .text-content h2.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .right-section .image-content {
+            width: 60%;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+        .link-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .link-image:hover {
+            transform: scale(1.1);
+        }
+
+        .skill-button {
+            display: inline-block;
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .skill-button.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .skill-button::after {
+            content: attr(data-hover);
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .skill-button.visible:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .skill-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px var(--box-shadow);
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .search-container {
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .search-input {
+            padding: 10px;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            font-size: 1em;
+            width: 300px;
+            margin-right: 10px;
+            background-color: var(--container-bg);
+            color: var(--text-color);
+        }
+
+        .search-button {
+            padding: 10px 20px;
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        .search-button:hover {
+            background-color: var(--text-color);
+        }
+
+        .guide-text {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .guide-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .menu-circle {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--button-bg);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .menu-popup {
+            position: fixed;
+            right: 90px;
+            bottom: 20px;
+            background-color: var(--container-bg);
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 10px var(--box-shadow);
+            display: none;
+        }
+
+        .menu-popup.show {
+            display: block;
+        }
+
+        .menu-item {
+            padding: 10px;
+            color: var(--text-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-item:hover {
+            background-color: var(--button-bg);
+            border-radius: 5px;
+        }
+
+        .memo-section {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            background: var(--container-bg);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px var(--box-shadow);
+            z-index: 1001;
+            display: none;
+        }
+
+        .annotation {
+            position: absolute;
+            background: yellow;
+            padding: 5px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .memo-content {
+            margin-bottom: 10px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 5px;
+            background-color: var(--button-bg);
+            color: var(--button-text);
+        }
+
+        .memo-content:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="theme-switch-wrapper">
+        <span><i class="fas fa-sun"></i></span>
+        <label class="theme-switch">
+            <input type="checkbox" id="theme-switch">
+            <span class="slider round"></span>
+        </label>
+        <span><i class="fas fa-moon"></i></span>
+    </div>
+
+    <header></header>
+    <div class="search-container">
+        <img src="your-animated-image.gif" alt="Search Icon" class="search-icon">
+        <input type="text" id="search-input" class="search-input" placeholder="본문 내용 검색...">
+        <button class="search-button" onclick="searchContent()">검색</button>
+    </div>
+
+    <div class="skill-container" id="section1">
+        <img src="배경1.jpg" alt="Profile Image">
+        <div class="text">
+            <h1>👋🏻 안녕하세요? 백엔드 개발자 이수경입니다.</h1>
+            <h2>사용자 중심의 개발 과정을 즐깁니다</h2>
+            <p>앱 사업으로 창업지원자 1등 1,200만원 선정 경험이 있습니다.<br>KDT를 성적우수상장을 받고 수료했습니다.<br>블로그를 운영하고 다양한 주제에 대해 300+개 포스팅을 작성하였습니다.</p>
+            <div class="logo-links">
+                <a href="https://your-notion-link.com" class="logo-link notion" target="_blank">
+                    <i class="fa-solid fa-n"></i>Notion
+                </a>
+                <a href="https://velog.io/@your-username" class="logo-link velog" target="_blank">
+                    <i class="fa-solid fa-v"></i>Velog
+                </a>
+                <a href="https://github.com/your-username" class="logo-link github" target="_blank">
+                    <i class="fa-brands fa-github"></i>GitHub
+                </a>
+                <a href="mailto:your.email@example.com" class="logo-link email">
+                    <i class="fa-solid fa-envelope"></i>Email
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="right-section">
+        <div class="text-content">
+            <div class="section">
+                <h1>기술 스택</h1>
+                <h2 class="guide-text">언어를 클릭하시면 근거자료로 넘어갑니다</h2>
+                <div class="skills-container">
+                    <span class="skill-button" data-hover="객체 지향 프로그래밍의 기초">Java</span>
+                    <span class="skill-button" data-hover="데이터 분석 및 AI 개발">Python</span>
+                    <span class="skill-button" data-hover="시스템 프로그래밍의 기본">C</span>
+                    <span class="skill-button" data-hover="현대적인 웹 프론트엔드 개발">React</span>
+                    <span class="skill-button" data-hover="강력한 백엔드 프레임워크">Spring</span>
+                    <span class="skill-button" data-hover="엔터프라이즈 애플리케이션 개발">Spring Framework</span>
+                </div>
+            </div>
+            ```html
+[이전 코드에서 이어서...]
+
+            <div class="section">
+                <h1>프로젝트</h1>
+                <p>In addition to programming languages, mention other skills such as MySQL, Docker, Git, and other tools or frameworks.</p>
+            </div>
+        </div>
+        <div class="image-content">
+            <a href="#section2">
+                <img src="공부.jpg" alt="Image Link" class="link-image">
+            </a>
+        </div>
+    </div>
+
+    <!-- 메뉴와 메모 관련 -->
+    <div class="menu-circle" id="menuButton">
+        <i class="fas fa-bars" style="color: var(--button-text);"></i>
+    </div>
+    <div class="menu-popup" id="menuPopup">
+        <div class="menu-item" onclick="scrollToSearch()">
+            <i class="fas fa-search"></i>
+            본문 검색
+        </div>
+        <div class="menu-item" onclick="scrollToTop()">
+            <i class="fas fa-arrow-up"></i>
+            맨 위로
+        </div>
+        <div class="menu-item" onclick="toggleMemo()">
+            <i class="fas fa-sticky-note"></i>
+            메모하기
+        </div>
+    </div>
+
+    <!-- 메모 섹션 -->
+    <div class="memo-section" id="memoSection">
+        <h3>메모장</h3>
+        <div id="memoList"></div>
+    </div>
+
+    <script>
+        function initTheme() {
+            const darkThemeSelected = localStorage.getItem('darkTheme') === 'true';
+            const toggleSwitch = document.querySelector('#theme-switch');
+            toggleSwitch.checked = darkThemeSelected;
+            if (darkThemeSelected) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        }
+
+        function switchTheme(e) {
+            if (e.target.checked) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('darkTheme', 'true');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('darkTheme', 'false');
+            }
+        }
+
+        function handleScroll() {
+            const buttons = document.querySelectorAll('.skill-button');
+            const guideText = document.querySelector('.guide-text');
+            const skillsSection = document.querySelector('.skills-container');
+            
+            const sectionPosition = skillsSection.getBoundingClientRect();
+            const screenPosition = window.innerHeight;
+
+            if(sectionPosition.top < screenPosition * 0.75) {
+                setTimeout(() => {
+                    guideText.classList.add('visible');
+                }, 200);
+                
+                buttons.forEach((button, index) => {
+                    setTimeout(() => {
+                        button.classList.add('visible');
+                    }, 400 + (100 * index));
+                });
+                
+                window.removeEventListener('scroll', handleScroll);
+            }
+        }
+
+        function searchContent() {
+            var query = document.getElementById("search-input").value.toLowerCase();
+            var sections = document.querySelectorAll('.skill-container');
+            var found = false;
+
+            sections.forEach(function(section) {
+                var sectionText = section.textContent.toLowerCase();
+                if (sectionText.includes(query)) {
+                    section.scrollIntoView({ behavior: 'smooth' });
+                    found = true;
+                    return;
+                }
+            });
+
+            if (!found) {
+                alert("No matching section found.");
+            }
+        }
+
+        // 메모 관련 기능
+        let annotations = [];
+
+        function toggleMemo() {
+            const memoSection = document.getElementById('memoSection');
+            memoSection.style.display = memoSection.style.display === 'none' ? 'block' : 'none';
+            document.getElementById('menuPopup').classList.remove('show');
+        }
+
+        document.addEventListener('click', function(e) {
+            if (document.getElementById('memoSection').style.display === 'block' 
+                && !e.target.closest('.memo-section') 
+                && !e.target.closest('.menu-popup')) {
+                const annotation = {
+                    x: e.pageX,
+                    y: e.pageY,
+                    text: prompt('메모를 입력하세요:'),
+                    scrollY: window.pageYOffset
+                };
+                
+                if (annotation.text) {
+                    annotations.push(annotation);
+                    updateMemoList();
+                    createAnnotationMarker(annotation);
+                }
+            }
+        });
+
+        function createAnnotationMarker(annotation) {
+            const marker = document.createElement('div');
+            marker.className = 'annotation';
+            marker.style.left = annotation.x + 'px';
+            marker.style.top = annotation.y + 'px';
+            marker.textContent = '📝';
+            document.body.appendChild(marker);
+        }
+
+        function updateMemoList() {
+            const memoList = document.getElementById('memoList');
+            memoList.innerHTML = annotations.map((ann, i) => `
+                <div class="memo-content" onclick="scrollToAnnotation(${ann.scrollY})">
+                    ${i + 1}. ${ann.text}
+                </div>
+            `).join('');
+        }
+
+        function scrollToAnnotation(y) {
+            window.scrollTo({
+                top: y,
+                behavior: 'smooth'
+            });
+        }
+
+        document.getElementById('menuButton').addEventListener('click', function() {
+            document.getElementById('menuPopup').classList.toggle('show');
+        });
+
+        function scrollToSearch() {
+            document.querySelector('.search-container').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('menuPopup').classList.remove('show');
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.getElementById('menuPopup').classList.remove('show');
+        }
+
+        document.addEventListener('click', function(event) {
+            const popup = document.getElementById('menuPopup');
+            const button = document.getElementById('menuButton');
+            if (!popup.contains(event.target) && !button.contains(event.target)) {
+                popup.classList.remove('show');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', initTheme);
+        document.querySelector('#theme-switch').addEventListener('change', switchTheme);
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('load', handleScroll);
+    </script>
+</body>
+</html>

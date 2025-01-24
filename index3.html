@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -97,7 +98,6 @@
             color: #f39c12;
         }
 
-        /* 기존 스타일 수정 */
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
@@ -339,6 +339,69 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* 메뉴 아이콘 스타일 */
+        .menu-icons {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .menu-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--button-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--button-text);
+            transition: transform 0.3s;
+        }
+
+        .menu-icon:hover {
+            transform: translateY(-5px);
+        }
+
+        .memo-section {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            background: var(--container-bg);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px var(--box-shadow);
+            z-index: 1001;
+            display: none;
+        }
+
+        .memo-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .memo-content {
+            margin-bottom: 10px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 5px;
+            background-color: var(--button-bg);
+            color: var(--button-text);
+        }
+
+        .memo-content:hover {
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
@@ -354,16 +417,16 @@
     <header></header>
     <div class="search-container">
         <img src="your-animated-image.gif" alt="Search Icon" class="search-icon">
-        <input type="text" id="search-input" class="search-input" placeholder="Search skills...">
+        <input type="text" id="search-input" class="search-input" placeholder="본문 내용 검색...">
         <button class="search-button" onclick="searchContent()">검색</button>
     </div>
 
     <div class="skill-container" id="section1">
         <img src="배경1.jpg" alt="Profile Image">
         <div class="text">
-            <h1>이수경</h1>
-            <h2>Web Developer</h2>
-            <p>앱 사업으로 창업지원자 1등 1,200만원 선정 경험이 있습니다<br>KDT를 성적우수상장을 받고 수료했습니다</p>
+            <h1>👋🏻 안녕하세요? 백엔드 개발자 이수경입니다.</h1>
+            <h2>사용자 중심의 개발 과정을 즐깁니다</h2>
+            <p>앱 사업으로 창업지원자 1등 1,200만원 선정 경험이 있습니다.<br>KDT를 성적우수상장을 받고 수료했습니다.<br>블로그를 운영하고 다양한 주제에 대해 300+개 포스팅을 작성하였습니다.</p>
             <div class="logo-links">
                 <a href="https://your-notion-link.com" class="logo-link notion" target="_blank">
                     <i class="fa-solid fa-n"></i>Notion
@@ -401,83 +464,151 @@
             </div>
         </div>
         <div class="image-content">
-            <a href="#section2">
-                <img src="공부.jpg" alt="Image Link" class="link-image">
-            </a>
+            <div class="image-content">
+                <a href="#section2">
+                    <img src="공부.jpg" alt="Image Link" class="link-image">
+                </a>
+            </div>
         </div>
-    </div>
-
-    <script>
-        // 다크모드 관련 함수
-        function initTheme() {
-            const darkThemeSelected = localStorage.getItem('darkTheme') === 'true';
-            const toggleSwitch = document.querySelector('#theme-switch');
-            toggleSwitch.checked = darkThemeSelected;
-            
-            if (darkThemeSelected) {
-                document.documentElement.setAttribute('data-theme', 'dark');
-            }
-        }
-
-        function switchTheme(e) {
-            if (e.target.checked) {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('darkTheme', 'true');
-            } else {
-                document.documentElement.removeAttribute('data-theme');
-                localStorage.setItem('darkTheme', 'false');
-            }
-        }
-
-        // 스크롤 애니메이션 함수
-        function handleScroll() {
-            const buttons = document.querySelectorAll('.skill-button');
-            const guideText = document.querySelector('.guide-text');
-            const skillsSection = document.querySelector('.skills-container');
-            
-            const sectionPosition = skillsSection.getBoundingClientRect();
-            const screenPosition = window.innerHeight;
-
-            if(sectionPosition.top < screenPosition * 0.75) {
-                setTimeout(() => {
-                    guideText.classList.add('visible');
-                }, 200);
-                
-                buttons.forEach((button, index) => {
-                    setTimeout(() => {
-                        button.classList.add('visible');
-                    }, 400 + (100 * index));
-                });
-                
-                window.removeEventListener('scroll', handleScroll);
-            }
-        }
-
-        // 검색 함수
-        function searchContent() {
-            var query = document.getElementById("search-input").value.toLowerCase();
-            var sections = document.querySelectorAll('.skill-container');
-            var found = false;
-
-            sections.forEach(function(section) {
-                var sectionText = section.textContent.toLowerCase();
-                if (sectionText.includes(query)) {
-                    section.scrollIntoView({ behavior: 'smooth' });
-                    found = true;
-                    return;
+     
+        <!-- 메뉴 아이콘들 -->
+        <div class="menu-icons">
+            <div class="menu-icon" onclick="scrollToSearch()">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="menu-icon" onclick="scrollToTop()">
+                <i class="fas fa-arrow-up"></i>
+            </div>
+            <div class="menu-icon" onclick="toggleMemo()">
+                <i class="fas fa-sticky-note"></i>
+            </div>
+        </div>
+     
+        <!-- 메모 섹션 -->
+        <div class="memo-section" id="memoSection">
+            <h3>메모장</h3>
+            <textarea class="memo-input" placeholder="메모를 입력하세요..." onkeyup="saveMemo(event)"></textarea>
+            <div id="memoList"></div>
+        </div>
+     
+        <script>
+            // 다크모드
+            function initTheme() {
+                const darkThemeSelected = localStorage.getItem('darkTheme') === 'true';
+                const toggleSwitch = document.querySelector('#theme-switch');
+                toggleSwitch.checked = darkThemeSelected;
+                if (darkThemeSelected) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
                 }
-            });
-
-            if (!found) {
-                alert("No matching section found.");
             }
-        }
-
-        // 이벤트 리스너 등록
-        document.addEventListener('DOMContentLoaded', initTheme);
-        document.querySelector('#theme-switch').addEventListener('change', switchTheme);
-        window.addEventListener('scroll', handleScroll);
-        window.addEventListener('load', handleScroll);
-    </script>
-</body>
-</html>
+     
+            function switchTheme(e) {
+                if (e.target.checked) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('darkTheme', 'true');
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('darkTheme', 'false');
+                }
+            }
+     
+            // 스크롤 애니메이션
+            function handleScroll() {
+                const buttons = document.querySelectorAll('.skill-button');
+                const guideText = document.querySelector('.guide-text');
+                const skillsSection = document.querySelector('.skills-container');
+                
+                const sectionPosition = skillsSection.getBoundingClientRect();
+                const screenPosition = window.innerHeight;
+     
+                if(sectionPosition.top < screenPosition * 0.75) {
+                    setTimeout(() => {
+                        guideText.classList.add('visible');
+                    }, 200);
+                    
+                    buttons.forEach((button, index) => {
+                        setTimeout(() => {
+                            button.classList.add('visible');
+                        }, 400 + (100 * index));
+                    });
+                    
+                    window.removeEventListener('scroll', handleScroll);
+                }
+            }
+     
+            // 검색
+            function searchContent() {
+                var query = document.getElementById("search-input").value.toLowerCase();
+                var sections = document.querySelectorAll('.skill-container');
+                var found = false;
+     
+                sections.forEach(function(section) {
+                    var sectionText = section.textContent.toLowerCase();
+                    if (sectionText.includes(query)) {
+                        section.scrollIntoView({ behavior: 'smooth' });
+                        found = true;
+                        return;
+                    }
+                });
+     
+                if (!found) {
+                    alert("검색 결과가 없습니다.");
+                }
+            }
+     
+            // 메모 관련 기능
+            let annotations = [];
+     
+            function saveMemo(event) {
+                if (event.key === 'Enter' && !event.shiftKey) {
+                    const text = event.target.value.trim();
+                    if (text) {
+                        const annotation = {
+                            text: text,
+                            scrollY: window.pageYOffset
+                        };
+                        annotations.push(annotation);
+                        updateMemoList();
+                        event.target.value = '';
+                    }
+                    event.preventDefault();
+                }
+            }
+     
+            function toggleMemo() {
+                const memoSection = document.getElementById('memoSection');
+                memoSection.style.display = memoSection.style.display === 'none' ? 'block' : 'none';
+            }
+     
+            function updateMemoList() {
+                const memoList = document.getElementById('memoList');
+                memoList.innerHTML = annotations.map((ann, i) => `
+                    <div class="memo-content" onclick="scrollToAnnotation(${ann.scrollY})">
+                        ${i + 1}. ${ann.text}
+                    </div>
+                `).join('');
+            }
+     
+            function scrollToAnnotation(y) {
+                window.scrollTo({
+                    top: y,
+                    behavior: 'smooth'
+                });
+            }
+     
+            function scrollToSearch() {
+                document.querySelector('.search-container').scrollIntoView({ behavior: 'smooth' });
+            }
+     
+            function scrollToTop() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+     
+            // 이벤트 리스너
+            document.addEventListener('DOMContentLoaded', initTheme);
+            document.querySelector('#theme-switch').addEventListener('change', switchTheme);
+            window.addEventListener('scroll', handleScroll);
+            window.addEventListener('load', handleScroll);
+        </script>
+     </body>
+     </html>     
