@@ -1,9 +1,10 @@
-# 깃허브 홈페이지
+# 면접관의 불편을 줄여주는 포트폴리오 홈페이지
 
 ## 프로젝트 현황
 - 제작 진행 중
 - 열람 가능: [사이트 바로가기](https://gogoleelee88.github.io/resume88/)
-
+  
+![제목 없는 동영상 - Clipchamp로 제작](https://github.com/user-attachments/assets/f4ae9097-4f31-4c79-b5b7-e10c62f4d2a8)
 ## 개요
 - 대상: 면접관/리크루터
 - 문제: 면접 시 다양한 문서 관리의 불편함
@@ -14,7 +15,7 @@
 - 실시간 면접 메모
 - 질문 스팟 이동
 - 상단 이동 버튼
-![제목 없는 동영상 - Clipchamp로 제작](https://github.com/user-attachments/assets/f4ae9097-4f31-4c79-b5b7-e10c62f4d2a8)
+
 
 
 ## 비전
