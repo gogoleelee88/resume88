@@ -14,6 +14,7 @@
 - 실시간 면접 메모
 - 질문 스팟 이동
 - 상단 이동 버튼
+![제목 없는 동영상 - Clipchamp로 제작](https://github.com/user-attachments/assets/f4ae9097-4f31-4c79-b5b7-e10c62f4d2a8)
 
 
 ## 비전
