@@ -1,703 +1,676 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Skills</title>
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-   <style>
-       :root {
-           --background-color: #f9f9f9;
-           --text-color: #333;
-           --text-color-secondary: #555;
-           --container-bg: #f5f5f5;
-           --border-color: #000;
-           --button-bg: #696965;
-           --button-text: #fff8dc;
-           --box-shadow: rgba(0,0,0,0.05);
-           --header-border: #000;
-       }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>개발자 포트폴리오 | Flow 협업툴 지원</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-       [data-theme="dark"] {
-           --background-color: #1a1a1a;
-           --text-color: #fff;
-           --text-color-secondary: #ccc;
-           --container-bg: #2d2d2d;
-           --border-color: #fff;
-           --button-bg: #4a4a4a;
-           --button-text: #fff;
-           --box-shadow: rgba(255,255,255,0.05);
-           --header-border: #fff;
-       }
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fafbfc;
+        }
 
-       /* 다크모드 토글 스타일 */
-       .theme-switch-wrapper {
-           display: flex;
-           align-items: center;
-           justify-content: flex-end;
-           padding: 20px;
-       }
+        /* Flow 브랜드 컬러 */
+        :root {
+            --primary-color: #4A90E2;
+            --primary-dark: #357ABD;
+            --secondary-color: #7B68EE;
+            --accent-color: #50E3C2;
+            --text-primary: #2c3e50;
+            --text-secondary: #6c757d;
+            --background-light: #fafbfc;
+            --background-white: #ffffff;
+            --border-color: #e9ecef;
+            --shadow-light: rgba(0, 0, 0, 0.08);
+            --shadow-medium: rgba(0, 0, 0, 0.12);
+        }
 
-       .theme-switch {
-           display: inline-block;
-           width: 60px;
-           height: 34px;
-           position: relative;
-           margin-left: 10px;
-       }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-       .theme-switch input {
-           opacity: 0;
-           width: 0;
-           height: 0;
-       }
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
 
-       .slider {
-           position: absolute;
-           cursor: pointer;
-           top: 0;
-           left: 0;
-           right: 0;
-           bottom: 0;
-           background-color: #ccc;
-           transition: .4s;
-           border-radius: 34px;
-       }
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
 
-       .slider:before {
-           position: absolute;
-           content: "";
-           height: 26px;
-           width: 26px;
-           left: 4px;
-           bottom: 4px;
-           background-color: white;
-           transition: .4s;
-           border-radius: 50%;
-       }
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
 
-       input:checked + .slider {
-           background-color: #2196F3;
-       }
+        .header-content h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
 
-       input:checked + .slider:before {
-           transform: translateX(26px);
-       }
+        .header-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
 
-       .theme-switch-wrapper span {
-           margin-right: 10px;
-           font-size: 1rem;
-       }
+        .cta-button {
+            display: inline-block;
+            background: var(--accent-color);
+            color: var(--text-primary);
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(80, 227, 194, 0.3);
+        }
 
-       .fa-moon {
-           color: #f1c40f;
-       }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(80, 227, 194, 0.4);
+        }
 
-       .fa-sun {
-           color: #f39c12;
-       }
+        /* Navigation */
+        nav {
+            background: var(--background-white);
+            box-shadow: 0 2px 10px var(--shadow-light);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-       body {
-           font-family: Arial, sans-serif;
-           padding: 20px;
-           background-color: var(--background-color);
-           margin-top: 40px;
-           color: var(--text-color);
-           transition: all 0.3s ease;
-       }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 1rem 0;
+        }
 
-       header {
-           border-bottom: 300px solid var(--header-border);
-           padding-bottom: 20px;
-           margin-bottom: 20px;
-       }
+        nav li {
+            margin: 0 2rem;
+        }
 
-       .skill-container {
-           display: flex;
-           align-items: center;
-           margin-bottom: 40px;
-           background-color: var(--container-bg);
-           padding: 30px;
-           border-radius: 15px;
-           box-shadow: 0 2px 4px var(--box-shadow);
-       }
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
 
-       .skill-container img {
-           width: 180px;
-           height: 180px;
-           margin-right: 30px;
-           border-radius: 50%;
-           object-fit: cover;
-           border: 4px solid var(--border-color);
-       }
+        nav a:hover, nav a.active {
+            color: var(--primary-color);
+            background: rgba(74, 144, 226, 0.1);
+        }
 
-       .skill-container .text {
-           max-width: 600px;
-           display: flex;
-           flex-direction: column;
-       }
+        /* Sections */
+        section {
+            padding: 80px 0;
+        }
 
-       .skill-container h1 {
-           margin: 0 0 10px 0;
-           color: var(--text-color);
-       }
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
 
-       .skill-container h2 {
-           margin: 0 0 15px 0;
-           color: var(--text-color-secondary);
-           font-weight: 500;
-       }
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            position: relative;
+        }
 
-       .skill-container p {
-           margin: 0;
-           color: var(--text-color-secondary);
-           line-height: 1.6;
-       }
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 2px;
+        }
 
-       .logo-links {
-           display: flex;
-           gap: 15px;
-           margin-top: 20px;
-       }
+        .section-title p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
-       .logo-link {
-           display: flex;
-           align-items: center;
-           gap: 8px;
-           text-decoration: none;
-           padding: 8px 16px;
-           border-radius: 8px;
-           color: var(--button-text);
-           font-weight: 500;
-           transition: transform 0.3s ease;
-       }
+        /* Project Cards */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
 
-       .logo-link:hover {
-           transform: translateY(-2px);
-       }
+        .project-card {
+            background: var(--background-white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px var(--shadow-light);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
 
-       .logo-link.notion { background-color: #000000; }
-       .logo-link.velog { background-color: #1a1a1a; }
-       .logo-link.github { background-color: #333333; }
-       .logo-link.email { background-color: #4d4d4d; }
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px var(--shadow-medium);
+        }
 
-       .right-section {
-           display: flex;
-           justify-content: space-between;
-           margin-bottom: 40px;
-       }
+        .project-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            position: relative;
+        }
 
-       .right-section .text-content {
-           width: 40%;
-           padding-right: 20px;
-       }
+        .project-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        }
 
-       .text-content .section {
-           margin-bottom: 60px;
-       }
+        .project-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
 
-       .text-content h1 {
-           color: var(--text-color);
-       }
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
 
-       .text-content h2 {
-           margin: 0 0 15px 0;
-           color: var(--text-color-secondary);
-           font-weight: normal;
-           font-size: 0.95em;
-           line-height: 1.6;
-           opacity: 0;
-           transform: translateY(20px);
-           transition: all 0.5s ease;
-       }
+        .project-content {
+            padding: 2rem;
+        }
 
-       .text-content h2.visible {
-           opacity: 1;
-           transform: translateY(0);
-       }
+        .project-content h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
 
-       .right-section .image-content {
-           width: 60%;
-           display: flex;
-           justify-content: space-between;
-           margin-top: 40px;
-       }
+        .project-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
 
-       .link-image {
-           width: 100%;
-           height: 120px;
-           object-fit: cover;
-           cursor: pointer;
-           transition: transform 0.3s;
-       }
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
 
-       .link-image:hover {
-           transform: scale(1.1);
-       }
+        .tech-tag {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
 
-       .skill-button {
-           display: inline-block;
-           background-color: var(--button-bg);
-           color: var(--button-text);
-           padding: 8px 16px;
-           border-radius: 20px;
-           margin: 5px;
-           cursor: pointer;
-           transition: all 0.5s ease;
-           position: relative;
-           opacity: 0;
-           transform: translateY(20px);
-       }
+        .achievement-badge {
+            display: inline-block;
+            background: var(--accent-color);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
 
-       .skill-button.visible {
-           opacity: 1;
-           transform: translateY(0);
-       }
+        /* Skills Section */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
 
-       .skill-button::after {
-           content: attr(data-hover);
-           position: absolute;
-           top: -35px;
-           left: 50%;
-           transform: translateX(-50%);
-           background-color: var(--button-bg);
-           color: var(--button-text);
-           padding: 5px 10px;
-           border-radius: 5px;
-           font-size: 0.8em;
-           opacity: 0;
-           visibility: hidden;
-           transition: all 0.3s ease;
-           white-space: nowrap;
-           pointer-events: none;
-           z-index: 1000;
-       }
+        .skill-category {
+            background: var(--background-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px var(--shadow-light);
+            border: 1px solid var(--border-color);
+        }
 
-       .skill-button.visible:hover::after {
-           opacity: 1;
-           visibility: visible;
-       }
+        .skill-category h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            text-align: center;
+        }
 
-       .skill-button:hover {
-           transform: translateY(-2px);
-           box-shadow: 0 2px 8px var(--box-shadow);
-       }
+        .skill-list {
+            list-style: none;
+        }
 
-       .skills-container {
-           display: flex;
-           flex-wrap: wrap;
-           gap: 10px;
-           margin-top: 10px;
-       }
+        .skill-item {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            background: var(--background-light);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
 
-       .search-container {
-           margin-bottom: 40px;
-           display: flex;
-           align-items: center;
-           justify-content: center;
-       }
+        .skill-item strong {
+            color: var(--text-primary);
+        }
 
-       .search-icon {
-           width: 40px;
-           height: 40px;
-           margin-right: 10px;
-       }
+        /* Contact Section */
+        .contact-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+        }
 
-       .search-input {
-           padding: 10px;
-           border: 2px solid var(--border-color);
-           border-radius: 25px;
-           font-size: 1em;
-           width: 300px;
-           margin-right: 10px;
-           background-color: var(--container-bg);
-           color: var(--text-color);
-       }
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
 
-       .search-button {
-           padding: 10px 20px;
-           background-color: var(--button-bg);
-           color: var(--button-text);
-           border: none;
-           border-radius: 25px;
-           font-size: 1em;
-           cursor: pointer;
-       }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
 
-       .search-button:hover {
-           background-color: var(--text-color);
-       }
+        .contact-item i {
+            width: 24px;
+            height: 24px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+        }
 
-       .guide-text {
-           opacity: 0;
-           transform: translateY(20px);
-           transition: all 0.5s ease;
-       }
+        /* Footer */
+        footer {
+            background: var(--text-primary);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
 
-       .guide-text.visible {
-           opacity: 1;
-           transform: translateY(0);
-       }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content h1 {
+                font-size: 2rem;
+            }
 
-       /* 메뉴 아이콘 스타일 */
-       .menu-icons {
-           position: fixed;
-           right: 20px;
-           bottom: 20px;
-           display: flex;
-           gap: 10px;
-           z-index: 1000;
-       }
+            .section-title h2 {
+                font-size: 2rem;
+            }
 
-       .menu-icon {
-           width: 50px;
-           height: 50px;
-           border-radius: 50%;
-           background-color: var(--button-bg);
-           display: flex;
-           align-items: center;
-           justify-content: center;
-           cursor: pointer;
-           color: var(--button-text);
-           transition: transform 0.3s;
-       }
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
 
-       .menu-icon:hover {
-           transform: translateY(-5px);
-       }
+            .contact-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
 
-       .memo-section {
-           position: fixed;
-           top: 20px;
-           right: 20px;
-           width: 300px;
-           background: var(--container-bg);
-           padding: 15px;
-           border-radius: 10px;
-           box-shadow: 0 2px 10px var(--box-shadow);
-           z-index: 1001;
-           display: none;
-       }
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
 
-       .memo-header {
-           display: flex;
-           justify-content: space-between;
-           align-items: center;
-           margin-bottom: 10px;
-       }
+            nav li {
+                margin: 0;
+            }
+        }
 
-       .memo-icons {
-           display: flex;
-           gap: 10px;
-       }
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
 
-       .memo-icons i {
-           cursor: pointer;
-           color: var(--text-color);
-           transition: color 0.3s;
-       }
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-       .memo-icons i:hover {
-           color: var(--button-bg);
-       }
-
-       .memo-input {
-           width: 100%;
-           padding: 10px;
-           margin-bottom: 10px;
-           border: 1px solid var(--border-color);
-           border-radius: 5px;
-           background: var(--background-color);
-           color: var(--text-color);
-       }
-
-       .memo-content {
-           margin-bottom: 10px;
-           cursor: pointer;
-           padding: 8px;
-           border-radius: 5px;
-           background-color: var(--button-bg);
-           color: var(--button-text);
-           display: flex;
-           justify-content: space-between;
-           align-items: center;
-       }
-
-       .memo-content:hover {
-           opacity: 0.9;
-       }
-
-       .memo-content .memo-actions {
-           display: flex;
-           gap: 5px;
-       }
-
-       .temp-marker {
-           position: absolute;
-           right: 10px;
-           width: 10px;
-           height: 10px;
-           border-radius: 50%;
-           background: var(--button-bg);
-           animation: pulse 1s infinite;
-           cursor: pointer;
-       }
-
-       @keyframes pulse {
-           0% { transform: scale(1); opacity: 1; }
-           50% { transform: scale(1.5); opacity: 0.7; }
-           100% { transform: scale(1); opacity: 1; }
-       }
-   </style>
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
 </head>
 <body>
-   <div class="theme-switch-wrapper">
-       <span><i class="fas fa-sun"></i></span>
-       <label class="theme-switch">
-           <input type="checkbox" id="theme-switch">
-           <span class="slider round"></span>
-       </label>
-       <span><i class="fas fa-moon"></i></span>
-   </div>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1>협업툴 개발자 포트폴리오</h1>
+                <p>연결의 힘으로 일을 쉽고 빠르게 - Flow와 함께 성장하는 개발자</p>
+                <a href="#projects" class="cta-button">프로젝트 보기</a>
+            </div>
+        </div>
+    </header>
 
-   <header></header>
-   <div class="search-container">
-       <img src="your-animated-image.gif" alt="Search Icon" class="search-icon">
-       <input type="text" id="search-input" class="search-input" placeholder="본문 내용 검색...">
-       <button class="search-button" onclick="searchContent()">검색</button>
-   </div>
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#about" class="active">소개</a></li>
+                <li><a href="#projects">프로젝트</a></li>
+                <li><a href="#skills">핵심 역량</a></li>
+                <li><a href="#contact">연락처</a></li>
+            </ul>
+        </div>
+    </nav>
 
-   <div class="skill-container" id="section1">
-       <img src="배경1.jpg" alt="Profile Image">
-       <div class="text">
-           <h1>👋🏻 안녕하세요? 백엔드 개발자 이수경입니다.</h1>
-           <h2>사용자 중심의 개발 과정을 즐깁니다</h2>
-           <p>앱 사업으로 창업지원자 1등 1,200만원 선정 경험이 있습니다.<br>KDT를 성적우수상장을 받고 수료했습니다.<br>블로그를 운영하고 다양한 주제에 대해 300+개 포스팅을 작성하였습니다.</p>
-           <div class="logo-links">
-               <a href="https://your-notion-link.com" class="logo-link notion" target="_blank">
-                   <i class="fa-solid fa-n"></i>Notion
-               </a>
-               <a href="https://velog.io/@lco2009d/posts" class="logo-link velog" target="_blank">
-                   <i class="fa-solid fa-v"></i>Velog
-               </a>
-               <a href="https://github.com/gogoleelee88" class="logo-link github" target="_blank">
-                   <i class="fa-brands fa-github"></i>GitHub
-               </a>
-               <a href="mailto:your.email@example.com" class="logo-link email">
-                   <i class="fa-solid fa-envelope"></i>Email
-               </a>
-           </div>
-       </div>
-   </div>
+    <section id="about" class="container">
+        <div class="section-title">
+            <h2>협업툴 전문 개발자</h2>
+            <p>AI와 협업툴 도메인에 특화된 풀스택 개발자로서, 사용자 중심의 혁신적인 솔루션을 개발합니다.</p>
+        </div>
+    </section>
 
-   <div class="right-section">
-       <div class="text-content">
-           <div class="section">
-               <h1>기술 스택</h1>
-               <h2 class="guide-text">언어를 클릭하시면 근거자료로 넘어갑니다</h2>
-    
-               <div class="skills-container">
-                   <span class="skill-button" data-hover="객체 지향 프로그래밍의 기초">Java</span>
-                   <span class="skill-button" data-hover="데이터 분석 및 AI 개발">Python</span>
-                   <span class="skill-button" data-hover="시스템 프로그래밍의 기본">C</span>
-                   <span class="skill-button" data-hover="현대적인 웹 프론트엔드 개발">React</span>
-                   <span class="skill-button" data-hover="강력한 백엔드 프레임워크">Spring</span>
-                   <span class="skill-button" data-hover="엔터프라이즈 애플리케이션 개발">Spring Framework</span>
-               </div>
-           </div>
-           <div class="section">
-               <h1>프로젝트</h1>
-               <p>In addition to programming languages, mention other skills such as MySQL, Docker, Git, and other tools or frameworks.</p>
-           </div>
-       </div>
-       <div class="image-content">
-           <a href="#section2">
-               <img src="공부.jpg" alt="Image Link" class="link-image">
-           </a>
-       </div>
-   </div>
+    <section id="projects" class="container">
+        <div class="section-title">
+            <h2>주요 프로젝트</h2>
+            <p>협업툴과 AI 기술을 활용한 실무 프로젝트들을 소개합니다.</p>
+        </div>
 
-   <!-- 메뉴 아이콘들 -->
-   <div class="menu-icons">
-       <div class="menu-icon" onclick="scrollToSearch()">
-           <i class="fas fa-search"></i>
-       </div>
-       <div class="menu-icon" onclick="scrollToTop()">
-           <i class="fas fa-arrow-up"></i>
-       </div>
-       <div class="menu-icon" onclick="toggleMemo()">
-           <i class="fas fa-sticky-note"></i>
-       </div>
-   </div>
+        <div class="projects-grid">
+            <div class="project-card fade-in-up">
+                <div class="project-header">
+                    <h3>내일봐 프로젝트</h3>
+                    <div class="project-meta">
+                        <span>2024년 8월</span>
+                        <span>기여도 100%</span>
+                    </div>
+                    <p>AI 기반 팀 협업 플랫폼</p>
+                </div>
+                <div class="project-content">
+                    <h4>🎯 프로젝트 개요</h4>
+                    <p>"연결의 힘으로 일을 쉽고 빠르게" - 기존 협업툴의 한계점을 분석하고 인간의 심리적 요소를 고려한 혁신적인 협업 플랫폼을 개발했습니다.</p>
+                    
+                    <h4>💡 핵심 솔루션</h4>
+                    <p>• AI 챗봇 사수: 회사 고유 업무 프로세스 학습 및 안내<br>
+                    • AI 심리 회고록: 개인 심리 분석 및 개선 방안 제시<br>
+                    • AI 회의록: 음성인식 기반 자동 회의록 생성<br>
+                    • 익명 채팅: 심리적 안전감 제공</p>
 
-   <!-- 메모 섹션 -->
-   <div class="memo-section" id="memoSection">
-       <div class="memo-header">
-           <h3>메모장</h3>
-           <div class="memo-icons">
-               <i class="fas fa-trash" onclick="clearMemos()" title="전체 삭제"></i>
-               <i class="fas fa-map-marker-alt" onclick="showAllLocations()" title="메모 위치 보기"></i>
-           </div>
-       </div>
-       <textarea class="memo-input" placeholder="메모를 입력하세요..." onkeyup="saveMemo(event)"></textarea>
-       <div id="memoList"></div>
-   </div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">Vite</span>
+                        <span class="tech-tag">OpenAI API</span>
+                    </div>
 
-   <script>
-       // 다크모드
-       function initTheme() {
-           const darkThemeSelected = localStorage.getItem('darkTheme') === 'true';
-           const toggleSwitch = document.querySelector('#theme-switch');
-           toggleSwitch.checked = darkThemeSelected;
-           if (darkThemeSelected) {
-               document.documentElement.setAttribute('data-theme', 'dark');
-           }
-       }
+                    <div class="achievement-badge">🏆 신입사원 이직률 87.5% 문제 해결 타겟</div>
+                </div>
+            </div>
 
-       function switchTheme(e) {
-           if (e.target.checked) {
-               document.documentElement.setAttribute('data-theme', 'dark');
-               localStorage.setItem('darkTheme', 'true');
-           } else {
-               document.documentElement.removeAttribute('data-theme');
-               localStorage.setItem('darkTheme', 'false');
-           }
-       }
+            <div class="project-card fade-in-up">
+                <div class="project-header">
+                    <h3>개인 맞춤형 명상 앱</h3>
+                    <div class="project-meta">
+                        <span>2019년 7-8월</span>
+                        <span>창업 프로젝트</span>
+                    </div>
+                    <p>AI 기반 개인화 웰니스 서비스</p>
+                </div>
+                <div class="project-content">
+                    <h4>🚀 창업가적 성취</h4>
+                    <p>헬스케어 트렌드를 예측하고 정신건강 케어 수요 증가를 포착하여 개인 맞춤형 명상 알고리즘을 기획했습니다.</p>
+                    
+                    <h4>📈 비즈니스 성과</h4>
+                    <p>• 경남 청년 창업아카데미 선정 (1,200만원 지원)<br>
+                    • 사용자 심리상태 기반 최적화 알고리즘 개발<br>
+                    • 비전공자에서 프로토타입 개발 완료</p>
 
-       // 스크롤 애니메이션
-       function handleScroll() {
-           const buttons = document.querySelectorAll('.skill-button');
-           const guideText = document.querySelector('.guide-text');
-           const skillsSection = document.querySelector('.skills-container');
-           
-           const sectionPosition = skillsSection.getBoundingClientRect();
-           const screenPosition = window.innerHeight;
+                    <div class="tech-stack">
+                        <span class="tech-tag">스마트 메이커</span>
+                        <span class="tech-tag">노코드 플랫폼</span>
+                        <span class="tech-tag">개인화 알고리즘</span>
+                    </div>
 
-           if(sectionPosition.top < screenPosition * 0.75) {
-               setTimeout(() => {
-                   guideText.classList.add('visible');
-               }, 200);
-               
-               buttons.forEach((button, index) => {
-                   setTimeout(() => {
-                       button.classList.add('visible');
-                   }, 400 + (100 * index));
-               });
-               
-               window.removeEventListener('scroll', handleScroll);
-           }
-       }
+                    <div class="achievement-badge">🏅 경남 청년 창업아카데미 선정</div>
+                </div>
+            </div>
 
-       // 검색
-       function searchContent() {
-           var query = document.getElementById("search-input").value.toLowerCase();
-           var sections = document.querySelectorAll('.skill-container');
-           var found = false;
+            <div class="project-card fade-in-up">
+                <div class="project-header">
+                    <h3>실시간 예약 시스템</h3>
+                    <div class="project-meta">
+                        <span>2024년 6월</span>
+                        <span>팀 프로젝트 (3인)</span>
+                    </div>
+                    <p>동시성 제어 기반 예약 플랫폼</p>
+                </div>
+                <div class="project-content">
+                    <h4>⚡ 핵심 기술 도전</h4>
+                    <p>실시간 협업툴의 핵심 기술인 동시성 제어 문제를 해결하고, 중복 예약 방지 시스템을 구현했습니다.</p>
+                    
+                    <h4>🔧 기술적 구현</h4>
+                    <p>• 프론트엔드: JavaScript 기반 실시간 버튼 상태 제어<br>
+                    • 백엔드: 데이터베이스 레벨 고유 제약 조건 설정<br>
+                    • 트랜잭션 관리로 데이터 무결성 보장</p>
 
-           sections.forEach(function(section) {
-               var sectionText = section.textContent.toLowerCase();
-               if (sectionText.includes(query)) {
-                   section.scrollIntoView({ behavior: 'smooth' });
-                   found = true;
-                   return;
-               }
-           });
+                    <div class="tech-stack">
+                        <span class="tech-tag">Java</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">관계형 DB</span>
+                        <span class="tech-tag">동시성 제어</span>
+                    </div>
 
-           if (!found) {
-               alert("검색 결과가 없습니다.");
-           }
-       }
+                    <div class="achievement-badge">🎯 Flow 핵심 기술 선행 학습</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-       // 메모 관련 기능
-       let annotations = [];
+    <section id="skills" class="container">
+        <div class="section-title">
+            <h2>핵심 역량</h2>
+            <p>Flow 협업툴 개발에 필요한 전문 역량을 보유하고 있습니다.</p>
+        </div>
 
-       function saveMemo(event) {
-           if (event.key === 'Enter' && !event.shiftKey) {
-               const text = event.target.value.trim();
-               if (text) {
-                   const annotation = {
-                       text: text,
-                       scrollY: window.pageYOffset
-                   };
-                   annotations.push(annotation);
-                   updateMemoList();
-                   event.target.value = '';
-               }
-               event.preventDefault();
-           }
-       }
+        <div class="skills-container">
+            <div class="skill-category">
+                <h3>🛠️ 기술적 역량</h3>
+                <ul class="skill-list">
+                    <li class="skill-item">
+                        <strong>풀스택 개발:</strong> React, TypeScript, Java를 활용한 end-to-end 개발
+                    </li>
+                    <li class="skill-item">
+                        <strong>AI 통합:</strong> OpenAI API 활용한 지능형 협업 서비스 구현
+                    </li>
+                    <li class="skill-item">
+                        <strong>실시간 시스템:</strong> 채팅, 음성인식, 동시성 제어 등 실시간 기능
+                    </li>
+                    <li class="skill-item">
+                        <strong>데이터베이스:</strong> 무결성 제약 조건 및 트랜잭션 관리
+                    </li>
+                </ul>
+            </div>
 
-       function toggleMemo() {
-           const memoSection = document.getElementById('memoSection');
-           memoSection.style.display = memoSection.style.display === 'none' ? 'block' : 'none';
-       }
+            <div class="skill-category">
+                <h3>🎯 문제 해결 역량</h3>
+                <ul class="skill-list">
+                    <li class="skill-item">
+                        <strong>협업툴 도메인:</strong> 기존 툴의 한계점 파악 및 개선 방안 도출
+                    </li>
+                    <li class="skill-item">
+                        <strong>사용자 중심 사고:</strong> 인간의 심리적 요소를 고려한 서비스 기획
+                    </li>
+                    <li class="skill-item">
+                        <strong>빠른 학습:</strong> 새로운 기술 스택 습득 및 실전 적용
+                    </li>
+                    <li class="skill-item">
+                        <strong>시장 분석:</strong> 트렌드 예측 및 비즈니스 기회 포착
+                    </li>
+                </ul>
+            </div>
 
-       function updateMemoList() {
-           const memoList = document.getElementById('memoList');
-           memoList.innerHTML = annotations.map((ann, i) => `
-               <div class="memo-content">
-                   <span onclick="scrollToAnnotation(${ann.scrollY})">${i + 1}. ${ann.text}</span>
-                   <div class="memo-actions">
-                       <i class="fas fa-times" onclick="deleteMemo(${i})" title="메모 삭제"></i>
-                   </div>
-               </div>
-           `).join('');
-       }
+            <div class="skill-category">
+                <h3>🤝 협업 및 소통 역량</h3>
+                <ul class="skill-list">
+                    <li class="skill-item">
+                        <strong>팀 프로젝트:</strong> 3인 팀에서의 효율적인 협업 경험
+                    </li>
+                    <li class="skill-item">
+                        <strong>기술 설계:</strong> API 명세 및 데이터 구조 협의
+                    </li>
+                    <li class="skill-item">
+                        <strong>문제 해결:</strong> 팀 차원의 기술적 이슈 해결
+                    </li>
+                    <li class="skill-item">
+                        <strong>리더십:</strong> 창업 프로젝트 대표 경험
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
-       function deleteMemo(index) {
-           if(confirm('이 메모를 삭제하시겠습니까?')) {
-               annotations.splice(index, 1);
-               updateMemoList();
-           }
-       }
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>연락처</h2>
+                <p>Flow와 함께 협업툴의 미래를 만들어가고 싶습니다.</p>
+            </div>
 
-       function clearMemos() {
-           if(annotations.length > 0 && confirm('모든 메모를 삭제하시겠습니까?')) {
-               annotations = [];
-               updateMemoList();
-           }
-       }
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i>📧</i>
+                    <span>gogoleelee88@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                    <i>🌐</i>
+                    <span>https://gogoleelee88.github.io/resume88/</span>
+                </div>
+                <div class="contact-item">
+                    <i>💼</i>
+                    <span>Flow 협업툴 개발자 지원</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-       function showAllLocations() {
-           // 기존 마커 제거
-           document.querySelectorAll('.temp-marker').forEach(m => m.remove());
-           
-           annotations.forEach((ann) => {
-               const marker = document.createElement('div');
-               marker.className = 'temp-marker';
-               marker.style.top = ann.scrollY + 'px';
-               document.body.appendChild(marker);
-               
-               marker.addEventListener('click', () => {
-                   scrollToAnnotation(ann.scrollY);
-               });
-           });
-           
-           setTimeout(() => {
-               document.querySelectorAll('.temp-marker').forEach(m => m.remove());
-           }, 3000);
-       }
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 개발자 포트폴리오. Flow와 함께 성장하는 개발자.</p>
+        </div>
+    </footer>
 
-       function scrollToAnnotation(y) {
-           window.scrollTo({
-               top: y,
-               behavior: 'smooth'
-           });
-       }
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                
+                // Update active link
+                document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
 
-       function scrollToSearch() {
-           document.querySelector('.search-container').scrollIntoView({ behavior: 'smooth' });
-       }
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-       function scrollToTop() {
-           window.scrollTo({ top: 0, behavior: 'smooth' });
-       }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
 
-       // 이벤트 리스너
-       document.addEventListener('DOMContentLoaded', initTheme);
-       document.querySelector('#theme-switch').addEventListener('change', switchTheme);
-       window.addEventListener('scroll', handleScroll);
-       window.addEventListener('load', handleScroll);
-   </script>
+        // Observe all cards
+        document.querySelectorAll('.project-card, .skill-category').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Update active navigation on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollPos = window.scrollY + 100;
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+
+                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+                    document.querySelector(`nav a[href="#${sectionId}"]`)?.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
