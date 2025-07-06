@@ -1,483 +1,709 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skills</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>개발자 포트폴리오 | Flow 협업툴 지원</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        /* Flow 실제 브랜드 컬러 기반 */
         :root {
-            --background-color: #f9f9f9;
-            --text-color: #333;
-            --text-color-secondary: #555;
-            --container-bg: #f5f5f5;
-            --border-color: #000;
-            --button-bg: #696965;
-            --button-text: #fff8dc;
-            --box-shadow: rgba(0,0,0,0.05);
-            --header-border: #000;
+            --primary-color: #2563eb;        /* Flow의 주요 파란색 */
+            --primary-light: #3b82f6;       /* 밝은 파란색 */
+            --primary-dark: #1d4ed8;        /* 진한 파란색 */
+            --secondary-color: #10b981;     /* Flow의 보조 초록색 */
+            --accent-color: #f59e0b;        /* 강조 주황색 */
+            --text-primary: #1f2937;        /* 진한 회색 */
+            --text-secondary: #6b7280;      /* 중간 회색 */
+            --text-light: #9ca3af;          /* 연한 회색 */
+            --background-white: #ffffff;
+            --background-light: #f8f9fa;
+            --background-gray: #f3f4f6;
+            --border-light: #e5e7eb;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
-        [data-theme="dark"] {
-            --background-color: #1a1a1a;
-            --text-color: #fff;
-            --text-color-secondary: #ccc;
-            --container-bg: #2d2d2d;
-            --border-color: #fff;
-            --button-bg: #4a4a4a;
-            --button-text: #fff;
-            --box-shadow: rgba(255,255,255,0.05);
-            --header-border: #fff;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        /* 다크모드 토글 스타일 */
-        .theme-switch-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding: 20px;
-        }
-
-        .theme-switch {
-            display: inline-block;
-            width: 60px;
-            height: 34px;
+        /* Header - Flow 스타일 */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 80px 0;
             position: relative;
-            margin-left: 10px;
+            overflow: hidden;
         }
 
-        .theme-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
+        header::before {
+            content: '';
             position: absolute;
-            cursor: pointer;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .slider {
-            background-color: #2196F3;
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
-
-        .theme-switch-wrapper span {
-            margin-right: 10px;
-            font-size: 1rem;
-        }
-
-        .fa-moon {
-            color: #f1c40f;
-        }
-
-        .fa-sun {
-            color: #f39c12;
-        }
-
-        /* 기존 스타일 수정 */
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            background-color: var(--background-color);
-            margin-top: 40px;
-            color: var(--text-color);
-            transition: all 0.3s ease;
-        }
-
-        header {
-            border-bottom: 300px solid var(--header-border);
-            padding-bottom: 20px;
-            margin-bottom: 20px;
-        }
-
-        .skill-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 40px;
-            background-color: var(--container-bg);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 2px 4px var(--box-shadow);
-        }
-
-        .skill-container img {
-            width: 180px;
-            height: 180px;
-            margin-right: 30px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--border-color);
-        }
-
-        .skill-container .text {
-            max-width: 600px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .skill-container h1 {
-            margin: 0 0 10px 0;
-            color: var(--text-color);
-        }
-
-        .skill-container h2 {
-            margin: 0 0 15px 0;
-            color: var(--text-color-secondary);
-            font-weight: 500;
-        }
-
-        .skill-container p {
-            margin: 0;
-            color: var(--text-color-secondary);
-            line-height: 1.6;
-        }
-
-        .logo-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .logo-link {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            color: var(--button-text);
-            font-weight: 500;
-            transition: transform 0.3s ease;
-        }
-
-        .logo-link:hover {
-            transform: translateY(-2px);
-        }
-
-        .logo-link.notion { background-color: #000000; }
-        .logo-link.velog { background-color: #1a1a1a; }
-        .logo-link.github { background-color: #333333; }
-        .logo-link.email { background-color: #4d4d4d; }
-
-        .right-section {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 40px;
-        }
-
-        .right-section .text-content {
-            width: 40%;
-            padding-right: 20px;
-        }
-
-        .text-content .section {
-            margin-bottom: 60px;
-        }
-
-        .text-content h1 {
-            color: var(--text-color);
-        }
-
-        .text-content h2 {
-            margin: 0 0 15px 0;
-            color: var(--text-color-secondary);
-            font-weight: normal;
-            font-size: 0.95em;
-            line-height: 1.6;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
-        }
-
-        .text-content h2.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .right-section .image-content {
-            width: 60%;
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-        }
-
-        .link-image {
             width: 100%;
-            height: 120px;
-            object-fit: cover;
-            cursor: pointer;
-            transition: transform 0.3s;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
         }
 
-        .link-image:hover {
-            transform: scale(1.1);
-        }
-
-        .skill-button {
-            display: inline-block;
-            background-color: var(--button-bg);
-            color: var(--button-text);
-            padding: 8px 16px;
-            border-radius: 20px;
-            margin: 5px;
-            cursor: pointer;
-            transition: all 0.5s ease;
+        .header-content {
             position: relative;
-            opacity: 0;
-            transform: translateY(20px);
+            z-index: 1;
+            text-align: center;
         }
 
-        .skill-button.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .header-content h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
         }
 
-        .skill-button::after {
-            content: attr(data-hover);
-            position: absolute;
-            top: -35px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--button-bg);
-            color: var(--button-text);
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.8em;
-            opacity: 0;
-            visibility: hidden;
+        .header-content .subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        .flow-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: white;
+            padding: 16px 32px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
             transition: all 0.3s ease;
-            white-space: nowrap;
-            pointer-events: none;
-            z-index: 1000;
+            box-shadow: var(--shadow-lg);
         }
 
-        .skill-button.visible:hover::after {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .skill-button:hover {
+        .cta-button:hover {
+            background: #059669;
             transform: translateY(-2px);
-            box-shadow: 0 2px 8px var(--box-shadow);
+            box-shadow: var(--shadow-xl);
         }
 
-        .skills-container {
+        /* Navigation - Flow 스타일 */
+        nav {
+            background: var(--background-white);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav li {
+            position: relative;
+        }
+
+        nav a {
+            display: block;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 1rem 1.5rem;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            margin: 0.5rem;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary-color);
+            background: rgba(37, 99, 235, 0.08);
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+        }
+
+        .section-title p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Project Cards - Flow 스타일 */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: var(--background-white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-light);
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .project-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .project-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .project-header h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .project-section h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .project-section p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-features {
+            list-style: none;
+            padding: 0;
+        }
+
+        .project-features li {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .project-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .tech-stack {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 0.5rem;
         }
 
-        .search-container {
-            margin-bottom: 40px;
+        .tech-tag {
+            background: var(--background-gray);
+            color: var(--text-primary);
+            padding: 0.375rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid var(--border-light);
+        }
+
+        .achievement-badge {
+            background: linear-gradient(135deg, var(--accent-color) 0%, #f97316 100%);
+            color: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            display: inline-block;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Skills Section - Flow 스타일 */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .skill-category {
+            background: var(--background-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .skill-category h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            text-align: center;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--background-gray);
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--background-light);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover {
+            background: var(--background-gray);
+            transform: translateX(4px);
+        }
+
+        .skill-item strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .skill-item p {
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+            font-size: 0.9rem;
+        }
+
+        /* Contact Section - Flow 스타일 */
+        .contact-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="contact-grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23contact-grid)"/></svg>');
+        }
+
+        .contact-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .contact-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--secondary-color);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 0.9rem;
         }
 
-        .search-icon {
-            width: 40px;
-            height: 40px;
-            margin-right: 10px;
+        /* Footer - Flow 스타일 */
+        footer {
+            background: var(--text-primary);
+            color: var(--text-light);
+            text-align: center;
+            padding: 2rem 0;
+            font-size: 0.9rem;
         }
 
-        .search-input {
-            padding: 10px;
-            border: 2px solid var(--border-color);
-            border-radius: 25px;
-            font-size: 1em;
-            width: 300px;
-            margin-right: 10px;
-            background-color: var(--container-bg);
-            color: var(--text-color);
+        .footer-content {
+            border-top: 1px solid #374151;
+            padding-top: 2rem;
         }
 
-        .search-button {
-            padding: 10px 20px;
-            background-color: var(--button-bg);
-            color: var(--button-text);
-            border: none;
-            border-radius: 25px;
-            font-size: 1em;
-            cursor: pointer;
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .container {
+                padding: 0 16px;
+            }
         }
 
-        .search-button:hover {
-            background-color: var(--text-color);
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
         }
 
-        .guide-text {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .guide-text.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Flow 브랜드 포인트 */
+        .flow-highlight {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .flow-accent {
+            color: var(--secondary-color);
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
-    <div class="theme-switch-wrapper">
-        <span><i class="fas fa-sun"></i></span>
-        <label class="theme-switch">
-            <input type="checkbox" id="theme-switch">
-            <span class="slider round"></span>
-        </label>
-        <span><i class="fas fa-moon"></i></span>
-    </div>
-
-    <header></header>
-    <div class="search-container">
-        <img src="your-animated-image.gif" alt="Search Icon" class="search-icon">
-        <input type="text" id="search-input" class="search-input" placeholder="Search skills...">
-        <button class="search-button" onclick="searchContent()">검색</button>
-    </div>
-
-    <div class="skill-container" id="section1">
-        <img src="배경1.jpg" alt="Profile Image">
-        <div class="text">
-            <h1>이수경</h1>
-            <h2>Web Developer</h2>
-            <p>앱 사업으로 창업지원자 1등 1,200만원 선정 경험이 있습니다<br>KDT를 성적우수상장을 받고 수료했습니다</p>
-            <div class="logo-links">
-                <a href="https://your-notion-link.com" class="logo-link notion" target="_blank">
-                    <i class="fa-solid fa-n"></i>Notion
-                </a>
-                <a href="https://velog.io/@your-username" class="logo-link velog" target="_blank">
-                    <i class="fa-solid fa-v"></i>Velog
-                </a>
-                <a href="https://github.com/your-username" class="logo-link github" target="_blank">
-                    <i class="fa-brands fa-github"></i>GitHub
-                </a>
-                <a href="mailto:your.email@example.com" class="logo-link email">
-                    <i class="fa-solid fa-envelope"></i>Email
-                </a>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="flow-badge">
+                    🚀 Flow 협업툴 지원 개발자
+                </div>
+                <h1>협업의 미래를 만드는 개발자</h1>
+                <p class="subtitle">AI와 협업툴 전문성으로 <span class="flow-accent">Flow</span>와 함께 성장하겠습니다</p>
+                <a href="#projects" class="cta-button">프로젝트 살펴보기</a>
             </div>
         </div>
-    </div>
+    </header>
 
-    <div class="right-section">
-        <div class="text-content">
-            <div class="section">
-                <h1>기술 스택</h1>
-                <h2 class="guide-text">언어를 클릭하시면 근거자료로 넘어갑니다</h2>
-                <div class="skills-container">
-                    <span class="skill-button" data-hover="객체 지향 프로그래밍의 기초">Java</span>
-                    <span class="skill-button" data-hover="데이터 분석 및 AI 개발">Python</span>
-                    <span class="skill-button" data-hover="시스템 프로그래밍의 기본">C</span>
-                    <span class="skill-button" data-hover="현대적인 웹 프론트엔드 개발">React</span>
-                    <span class="skill-button" data-hover="강력한 백엔드 프레임워크">Spring</span>
-                    <span class="skill-button" data-hover="엔터프라이즈 애플리케이션 개발">Spring Framework</span>
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#about" class="active">소개</a></li>
+                <li><a href="#projects">프로젝트</a></li>
+                <li><a href="#skills">핵심 역량</a></li>
+                <li><a href="#contact">연락처</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="about" class="container">
+        <div class="section-title">
+            <h2>협업툴 전문 개발자</h2>
+            <p>AI와 협업툴 도메인에 특화된 풀스택 개발자로서, <span class="flow-highlight">사용자 중심의 혁신적인 솔루션</span>을 개발하여 Flow와 함께 협업의 미래를 만들어가고 싶습니다.</p>
+        </div>
+    </section>
+
+    <section id="projects" class="container">
+        <div class="section-title">
+            <h2>주요 프로젝트</h2>
+            <p><span class="flow-highlight">Flow</span>의 핵심 가치와 부합하는 협업툴 및 AI 기술 프로젝트들을 소개합니다.</p>
+        </div>
+
+        <div class="projects-grid">
+            <div class="project-card fade-in-up">
+                <div class="project-header">
+                    <h3>내일봐 프로젝트</h3>
+                    <div class="project-meta">
+                        <span>2024년 8월</span>
+                        <span>100% 기여</span>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <div class="project-section">
+                        <h4>🎯 프로젝트 개요</h4>
+                        <p>"연결의 힘으로 일을 쉽고 빠르게" - Flow의 핵심 가치와 동일한 비전으로 기존 협업툴의 한계점을 분석하고 인간의 심리적 요소를 고려한 혁신적인 협업 플랫폼을 개발했습니다.</p>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h4>💡 핵심 기능 (Flow와 시너지)</h4>
+                        <ul class="project-features">
+                            <li>AI 챗봇 사수: 회사 업무 프로세스 학습 및 안내</li>
+                            <li>AI 심리 회고록: 개인 심리 분석 및 개선 방안</li>
+                            <li>AI 회의록: 음성인식 기반 자동 회의록 생성</li>
+                            <li>익명 채팅: 심리적 안전감 제공</li>
+                        </ul>
+                    </div>
+
+                    <div class="project-section">
+                        <h4>🛠️ 기술 스택</h4>
+                        <div class="tech-stack">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">TypeScript</span>
+                            <span class="tech-tag">Vite</span>
+                            <span class="tech-tag">OpenAI API</span>
+                        </div>
+                    </div>
+
+                    <div class="achievement-badge">🏆 신입사원 이직률 87.5% 문제 해결 타겟</div>
                 </div>
             </div>
-            <div class="section">
-                <h1>프로젝트</h1>
-                <p>In addition to programming languages, mention other skills such as MySQL, Docker, Git, and other tools or frameworks.</p>
+
+            <div class="project-card fade-in-up">
+                <div class="project-header">
+                    <h3>실시간 예약 시스템</h3>
+                    <div class="project-meta">
+                        <span>2024년 6월</span>
+                        <span>팀 프로젝트</span>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <div class="project-section">
+                        <h4>⚡ Flow 핵심 기술 선행 학습</h4>
+                        <p>실시간 협업툴의 핵심 기술인 동시성 제어 문제를 해결하고, 중복 예약 방지 시스템을 구현했습니다.</p>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h4>🔧 기술적 구현</h4>
+                        <ul class="project-features">
+                            <li>프론트엔드: JavaScript 기반 실시간 버튼 상태 제어</li>
+                            <li>백엔드: 데이터베이스 레벨 고유 제약 조건 설정</li>
+                            <li>트랜잭션 관리로 데이터 무결성 보장</li>
+                            <li>실시간 상태 동기화 구현</li>
+                        </ul>
+                    </div>
+
+                    <div class="project-section">
+                        <h4>🛠️ 기술 스택</h4>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Java</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">관계형 DB</span>
+                            <span class="tech-tag">동시성 제어</span>
+                        </div>
+                    </div>
+
+                    <div class="achievement-badge">🎯 Flow 핵심 기술 선행 학습 완료</div>
+                </div>
+            </div>
+
+            <div class="project-card fade-in-up">
+                <div class="project-header">
+                    <h3>개인 맞춤형 명상 앱</h3>
+                    <div class="project-meta">
+                        <span>2019년 7-8월</span>
+                        <span>창업 프로젝트</span>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <div class="project-section">
+                        <h4>🚀 트렌드 예측 및 창업가적 성취</h4>
+                        <p>헬스케어 트렌드를 예측하고 정신건강 케어 수요 증가를 포착하여 개인 맞춤형 명상 알고리즘을 기획했습니다.</p>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h4>📈 비즈니스 성과</h4>
+                        <ul class="project-features">
+                            <li>경남 청년 창업아카데미 선정 (1,200만원 지원)</li>
+                            <li>사용자 심리상태 기반 최적화 알고리즘 개발</li>
+                            <li>비전공자에서 프로토타입 개발 완료</li>
+                            <li>시장 분석 및 비즈니스 모델 구축</li>
+                        </ul>
+                    </div>
+
+                    <div class="project-section">
+                        <h4>🛠️ 기술 스택</h4>
+                        <div class="tech-stack">
+                            <span class="tech-tag">스마트 메이커</span>
+                            <span class="tech-tag">노코드 플랫폼</span>
+                            <span class="tech-tag">개인화 알고리즘</span>
+                        </div>
+                    </div>
+
+                    <div class="achievement-badge">🏅 경남 청년 창업아카데미 선정</div>
+                </div>
             </div>
         </div>
-        <div class="image-content">
-            <a href="#section2">
-                <img src="공부.jpg" alt="Image Link" class="link-image">
-            </a>
+    </section>
+
+    <section id="skills" class="container">
+        <div class="section-title">
+            <h2>핵심 역량</h2>
+            <p><span class="flow-highlight">Flow</span> 협업툴 개발에 필요한 전문 역량을 체계적으로 보유하고 있습니다.</p>
         </div>
-    </div>
 
-    <script>
-        // 다크모드 관련 함수
-        function initTheme() {
-            const darkThemeSelected = localStorage.getItem('darkTheme') === 'true';
-            const toggleSwitch = document.querySelector('#theme-switch');
-            toggleSwitch.checked = darkThemeSelected;
-            
-            if (darkThemeSelected) {
-                document.documentElement.setAttribute('data-theme', 'dark');
-            }
-        }
+        <div class="skills-container">
+            <div class="skill-category">
+                <h3>🛠️ 기술적 역량</h3>
+                <ul class="skill-list">
+                    <li class="skill-item">
+                        <strong>풀스택 개발</strong>
+                        <p>React, TypeScript, Java를 활용한 end-to-end 개발 경험</p>
+                    </li>
+                    <li class="skill-item">
+                        <strong>AI 통합 개발</strong>
+                        <p>OpenAI API를 활용한 지능형 협업 서비스 구현</p>
+                    </li>
+                    <li class="skill-item">
+                        <strong>실시간 시스템</strong>
+                        <p>채팅, 음성인식, 동시성 제어 등 실시간 기능 구현</p>
+                    </li>
+                    <li class="skill-item">
+                        <strong>데이터베이스 설계</strong>
+                        <p>무결성 제약 조건 및 트랜잭션 관리 전문성</p>
+                    </li>
+                </ul>
+            </div>
 
-        function switchTheme(e) {
-            if (e.target.checked) {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('darkTheme', 'true');
-            } else {
-                document.documentElement.removeAttribute('data-theme');
-                localStorage.setItem('darkTheme', 'false');
-            }
-        }
-
-        // 스크롤 애니메이션 함수
-        function handleScroll() {
-            const buttons = document.querySelectorAll('.skill-button');
-            const guideText = document.querySelector('.guide-text');
-            const skillsSection = document.querySelector('.skills-container');
-            
-            const sectionPosition = skillsSection.getBoundingClientRect();
-            const screenPosition = window.innerHeight;
-
-            if(sectionPosition.top < screenPosition * 0.75) {
-                setTimeout(() => {
-                    guideText.classList.add('visible');
-                }, 200);
-                
-                buttons.forEach((button, index) => {
-                    setTimeout(() => {
-                        button.classList.add('visible');
-                    }, 400 + (100 * index));
-                });
-                
-                window.removeEventListener('scroll', handleScroll);
-            }
-        }
-
-        // 검색 함수
-        function searchContent() {
-            var query = document.getElementById("search-input").value.toLowerCase();
-            var sections = document.querySelectorAll('.skill-container');
-            var found = false;
-
-            sections.forEach(function(section) {
-                var sectionText = section.textContent.toLowerCase();
-                if (sectionText.includes(query)) {
-                    section.scrollIntoView({ behavior: 'smooth' });
-                    found = true;
-                    return;
-                }
-            });
-
-            if (!found) {
-                alert("No matching section found.");
-            }
-        }
-
-        // 이벤트 리스너 등록
-        document.addEventListener('DOMContentLoaded', initTheme);
-        document.querySelector('#theme-switch').addEventListener('change', switchTheme);
-        window.addEventListener('scroll', handleScroll);
-        window.addEventListener('load', handleScroll);
-    </script>
-</body>
-</html>
+            <div class="skill-category">
+                <h3>🎯 Flow 도메인 전문성</h3>
+                <ul class="skill-list">
+                    <li class="skill-item">
+                        <strong>협업툴 도메인 이해</strong>
+                        <p>기존 협업툴의 한계점 파악 및 혁신적 개선 방안 도출</p>
+                    </li>
+                    <li class="skill-item">
+                        <strong>사용자 중심 사고</strong>
+                        <p>인간의 심리적 요소를 고려한 UX/UI 서비스 기획</p>
+                    </li>
+                    <li class="skill-item">
+                        <strong>AI 협업툴 비전</strong>
+                        <p>AI와 협업툴의 융합을 통한 차세대 플랫폼 구상</p>
+                    </li>
+                    <li class="skill-item">
+                        <strong>시장 분석 능력</strong>
+                        <p>
