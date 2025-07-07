@@ -486,6 +486,7 @@
             overflow: hidden;
             box-shadow: var(--shadow-xl);
             position: relative;
+            background-color: #f3f4f6; /* 이미지가 안 보일 때 배경색 */
         }
 
         .hero-image {
@@ -493,6 +494,7 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.3s ease;
+             display: block; /* 추가 */
         }
 
         .hero-image:hover {
