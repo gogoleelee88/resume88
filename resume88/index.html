@@ -444,6 +444,73 @@
             padding-top: 2rem;
         }
 
+        /* Hero Image Container */
+        .hero-image-container {
+            width: 100%;
+            max-width: 800px;
+            height: 200px;
+            margin: 0 auto 3rem auto;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .hero-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* Animated Title */
+        .animated-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+            opacity: 0;
+            animation: slideInFromTop 1s ease-out 0.3s forwards;
+        }
+
+        .animated-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+            opacity: 0;
+            animation: slideInFromTop 1s ease-out 0.6s forwards;
+        }
+
+        /* Animation Keyframes */
+        @keyframes slideInFromTop {
+            from {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 반응형 이미지 */
+        @media (max-width: 768px) {
+            .hero-image-container {
+                height: 150px;
+                margin-bottom: 2rem;
+            }
+            
+            .animated-title {
+                font-size: 2rem;
+            }
+        }
         /* Responsive Design */
         @media (max-width: 768px) {
             .header-content h1 {
@@ -531,12 +598,16 @@
         </div>
     </nav>
 
-    <section id="about" class="container">
+  <section id="about" class="container">
         <div class="section-title">
-            <h2>협업툴 전문 개발자</h2>
-            <p>AI와 협업툴 도메인에 특화된 풀스택 개발자로서, <span class="flow-highlight">사용자 중심의 혁신적인 솔루션</span>을 개발하여 Flow와 함께 협업의 미래를 만들어가고 싶습니다.</p>
+            <div class="hero-image-container">
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&h=300&q=80" alt="협업 이미지" class="hero-image">
+            </div>
+            <h2 class="animated-title">협업툴 전문 개발자</h2>
+            <p class="animated-subtitle">AI와 협업툴 도메인에 특화된 풀스택 개발자로서, <span class="flow-highlight">사용자 중심의 혁신적인 솔루션</span>을 개발하여 Flow와 함께 협업의 미래를 만들어가고 싶습니다.</p>
         </div>
     </section>
+    
 
     <section id="projects" class="container">
         <div class="section-title">
