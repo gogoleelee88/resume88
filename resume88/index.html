@@ -155,9 +155,41 @@
             background: rgba(37, 99, 235, 0.08);
         }
 
-        /* Sections */
+        * Sections - 간격 조정 */
         section {
-            padding: 80px 0;
+            padding: 120px 0; /* 기존 80px에서 120px로 증가 */
+        }
+
+        /* 특정 섹션별 간격 조정 (선택사항) */
+        #about {
+            padding: 100px 0; /* about 섹션은 조금 작게 */
+        }
+
+        #projects {
+            padding: 140px 0; /* projects 섹션은 더 크게 */
+        }
+
+        #skills {
+            padding: 120px 0;
+        }
+
+        /* 반응형에서 간격 조정 */
+        @media (max-width: 768px) {
+            section {
+                padding: 80px 0; /* 모바일에서는 기존 간격 유지 */
+            }
+            
+            #about {
+                padding: 60px 0;
+            }
+            
+            #projects {
+                padding: 100px 0;
+            }
+            
+            #skills {
+                padding: 80px 0;
+            }
         }
 
         .section-title {
