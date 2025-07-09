@@ -6,6 +6,248 @@
     <title>개발자 포트폴리오 | 개발자 파트 지원</title>
     <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+
+        /* 인터랙티브 스킬 섹션 CSS - 기존 스타일 태그 안에 추가 */
+        
+        /* 메인 스킬 섹션 */
+        .skills-interactive-section {
+            padding: 120px 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e5e7eb 100%);
+        }
+
+        /* 카테고리 탭 */
+        .skill-tabs {
+            display: flex;
+            justify-content: center;
+            background: var(--background-white);
+            border-radius: 16px;
+            padding: 8px;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-light);
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .skill-tab {
+            padding: 16px 24px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-tab.active {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .skill-tab:hover:not(.active) {
+            background: var(--background-light);
+            color: var(--text-primary);
+        }
+
+        /* 스킬 콘텐츠 영역 */
+        .skill-content-container {
+            background: var(--background-white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-light);
+            min-height: 600px;
+        }
+
+        .skill-content {
+            display: none;
+            padding: 3rem;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .skill-content.active {
+            display: block;
+        }
+
+        /* 비디오 영역 */
+        .skill-video-section {
+            display: flex;
+            gap: 3rem;
+            align-items: flex-start;
+        }
+
+        .skill-video-container {
+            flex: 1;
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            min-height: 300px;
+        }
+
+        .skill-video-placeholder {
+            width: 100%;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-video-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1), transparent);
+        }
+
+        .video-play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .video-play-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .video-play-button::after {
+            content: '▶';
+            font-size: 24px;
+            color: white;
+            margin-left: 4px;
+        }
+
+        /* 스킬 상세 정보 */
+        .skill-details {
+            flex: 1;
+        }
+
+        .skill-details h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .skill-details p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .skill-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .skill-features li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-light);
+            position: relative;
+            padding-left: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .skill-features li:last-child {
+            border-bottom: none;
+        }
+
+        .skill-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .skill-progress {
+            margin-top: 2rem;
+        }
+
+        .skill-progress-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .skill-progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--background-light);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+            border-radius: 4px;
+            transition: width 1s ease-out;
+        }
+
+        /* 자동 재생 표시기 */
+        .auto-play-indicator {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .auto-play-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
         * {
             margin: 0;
             padding: 0;
@@ -764,101 +1006,258 @@
             </div>
         </div>
     </section>
-
-    <section id="skills" class="container">
-        <div class="section-title">
-            <h2>핵심 역량</h2>
-            <p><span class="flow-highlight">Flow</span> 협업툴 개발에 필요한 전문 역량을 체계적으로 보유하고 있습니다.</p>
-        </div>
-
-        <div class="skills-container">
-            <div class="skill-category">
-                <h3>🛠️ 기술적 역량</h3>
-                <ul class="skill-list">
-                    <li class="skill-item">
-                        <strong>풀스택 개발</strong>
-                        <p>React, TypeScript, Java를 활용한 end-to-end 개발 경험</p>
-                    </li>
-                    <li class="skill-item">
-                        <strong>AI 통합 개발</strong>
-                        <p>OpenAI API를 활용한 지능형 협업 서비스 구현</p>
-                    </li>
-                    <li class="skill-item">
-                        <strong>실시간 시스템</strong>
-                        <p>채팅, 음성인식, 동시성 제어 등 실시간 기능 구현</p>
-                    </li>
-                    <li class="skill-item">
-                        <strong>데이터베이스 설계</strong>
-                        <p>무결성 제약 조건 및 트랜잭션 관리 전문성</p>
-                    </li>
-                </ul>
+<section id="skills" class="skills-interactive-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>가장 많이 쓰는 기능 5가지</h2>
+                <p><span style="color: var(--primary-color); font-weight: 600;">Flow</span>와 함께 협업의 미래를 만들어갈 핵심 역량을 소개합니다.</p>
             </div>
 
-            <div class="skill-category">
-                <h3>🎯 Flow 도메인 전문성</h3>
-                <ul class="skill-list">
-                    <li class="skill-item">
-                        <strong>협업툴 도메인 이해</strong>
-                        <p>기존 협업툴의 한계점 파악 및 혁신적 개선 방안 도출</p>
-                    </li>
-                    <li class="skill-item">
-                        <strong>사용자 중심 사고</strong>
-                        <p>인간의 심리적 요소를 고려한 UX/UI 서비스 기획</p>
-                    </li>
-                    <li class="skill-item">
-                        <strong>AI 협업툴 비전</strong>
-                        <p>AI와 협업툴의 융합을 통한 차세대 플랫폼 구상</p>
-                    </li>
-                    <li class="skill-item">
-                        <strong>시장 분석 능력</strong>
-                        <p>
-<p>트렌드 예측 및 시장 기회 포착을 통한 비즈니스 성과 창출</p>
-                    </li>
-                </ul>
+            <!-- 카테고리 탭 -->
+            <div class="skill-tabs">
+                <button class="skill-tab active" data-tab="frontend">프론트엔드</button>
+                <button class="skill-tab" data-tab="backend">백엔드</button>
+                <button class="skill-tab" data-tab="ai">AI 통합</button>
+                <button class="skill-tab" data-tab="collaboration">협업툴</button>
+                <button class="skill-tab" data-tab="database">데이터베이스</button>
             </div>
 
-            <div class="skill-category">
-                <h3>💼 비즈니스 역량</h3>
-                <ul class="skill-list">
-                    <li class="skill-item">
-                        <strong>창업가 정신</strong>
-                        <p>경남 청년 창업아카데미 선정, 아이디어 구현 및 프로토타입 개발</p>
-                    </li>
-                    <li class="skill-item">
-                        <strong>트렌드 예측</strong>
-                        <p>헬스케어 및 협업툴 시장 트렌드 분석 및 기회 포착</p>
-                    </li>
-                    <li class="skill-item">
-                        <strong>프로젝트 관리</strong>
-                        <p>일정 관리, 품질 보증, 팀 협업을 통한 성공적인 프로젝트 완수</p>
-                    </li>
-                    <li class="skill-item">
-                        <strong>문제 해결</strong>
-                        <p>복잡한 기술적 문제를 체계적으로 분석하고 해결하는 능력</p>
-                    </li>
-                </ul>
-            </div>
+            <!-- 스킬 콘텐츠 -->
+            <div class="skill-content-container">
+                <!-- 프론트엔드 -->
+                <div class="skill-content active" id="frontend">
+                    <div class="skill-video-section">
+                        <div class="skill-video-container">
+                            <div class="skill-video-placeholder">
+                                <div>React & TypeScript 개발</div>
+                                <div class="video-play-button"></div>
+                                <div class="auto-play-indicator">
+                                    <div class="auto-play-dot"></div>
+                                    자동 재생 중
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-details">
+                            <h3>🚀 현대적 프론트엔드 개발</h3>
+                            <p>React와 TypeScript를 활용하여 사용자 친화적이고 확장 가능한 웹 애플리케이션을 구축합니다.</p>
+                            <ul class="skill-features">
+                                <li>React Hook을 활용한 상태 관리</li>
+                                <li>TypeScript로 타입 안정성 확보</li>
+                                <li>반응형 디자인 구현</li>
+                                <li>컴포넌트 기반 아키텍처</li>
+                                <li>성능 최적화 및 번들링</li>
+                            </ul>
+                            <div class="skill-progress">
+                                <div class="skill-progress-item">
+                                    <div class="skill-progress-label">
+                                        <span>React</span>
+                                        <span>90%</span>
+                                    </div>
+                                    <div class="skill-progress-bar">
+                                        <div class="skill-progress-fill" style="width: 90%;"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-progress-item">
+                                    <div class="skill-progress-label">
+                                        <span>TypeScript</span>
+                                        <span>85%</span>
+                                    </div>
+                                    <div class="skill-progress-bar">
+                                        <div class="skill-progress-fill" style="width: 85%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="skill-category">
-                <h3>🎯 Flow 핵심 가치 연결</h3>
-                <ul class="skill-list">
-                    <li class="skill-item">
-                        <strong>연결의 힘</strong>
-                        <p>AI와 협업툴의 융합을 통한 새로운 가치 창출</p>
-                    </li>
-                    <li class="skill-item">
-                        <strong>사용자 중심</strong>
-                        <p>인간의 심리적 요소를 고려한 직관적 UX 설계</p>
-                    </li>
-                    <li class="skill-item">
-                        <strong>혁신적 사고</strong>
-                        <p>기존 협업툴의 한계를 뛰어넘는 창의적 해결책 도출</p>
-                    </li>
-                    <li class="skill-item">
-                        <strong>미래 지향</strong>
-                        <p>AI 시대에 맞는 차세대 협업 플랫폼 비전 제시</p>
-                    </li>
-                </ul>
+                <!-- 백엔드 -->
+                <div class="skill-content" id="backend">
+                    <div class="skill-video-section">
+                        <div class="skill-video-container">
+                            <div class="skill-video-placeholder">
+                                <div>Java 백엔드 시스템</div>
+                                <div class="video-play-button"></div>
+                                <div class="auto-play-indicator">
+                                    <div class="auto-play-dot"></div>
+                                    자동 재생 중
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-details">
+                            <h3>⚡ 안정적인 백엔드 시스템</h3>
+                            <p>Java 기반의 견고한 서버 아키텍처를 구축하여 안정적인 서비스를 제공합니다.</p>
+                            <ul class="skill-features">
+                                <li>RESTful API 설계 및 구현</li>
+                                <li>데이터베이스 연동 및 ORM</li>
+                                <li>트랜잭션 관리 및 예외 처리</li>
+                                <li>보안 및 인증 시스템</li>
+                                <li>성능 모니터링 및 최적화</li>
+                            </ul>
+                            <div class="skill-progress">
+                                <div class="skill-progress-item">
+                                    <div class="skill-progress-label">
+                                        <span>Java</span>
+                                        <span>85%</span>
+                                    </div>
+                                    <div class="skill-progress-bar">
+                                        <div class="skill-progress-fill" style="width: 85%;"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-progress-item">
+                                    <div class="skill-progress-label">
+                                        <span>Spring Boot</span>
+                                        <span>80%</span>
+                                    </div>
+                                    <div class="skill-progress-bar">
+                                        <div class="skill-progress-fill" style="width: 80%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI 통합 -->
+                <div class="skill-content" id="ai">
+                    <div class="skill-video-section">
+                        <div class="skill-video-container">
+                            <div class="skill-video-placeholder">
+                                <div>AI 기반 협업 시스템</div>
+                                <div class="video-play-button"></div>
+                                <div class="auto-play-indicator">
+                                    <div class="auto-play-dot"></div>
+                                    자동 재생 중
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-details">
+                            <h3>🤖 AI 통합 개발</h3>
+                            <p>OpenAI API를 활용하여 지능형 협업 도구를 개발하고 사용자 경험을 혁신합니다.</p>
+                            <ul class="skill-features">
+                                <li>OpenAI API 통합 및 활용</li>
+                                <li>AI 챗봇 시스템 구현</li>
+                                <li>자연어 처리 기반 서비스</li>
+                                <li>음성 인식 및 자동 회의록</li>
+                                <li>개인화 추천 알고리즘</li>
+                            </ul>
+                            <div class="skill-progress">
+                                <div class="skill-progress-item">
+                                    <div class="skill-progress-label">
+                                        <span>OpenAI API</span>
+                                        <span>88%</span>
+                                    </div>
+                                    <div class="skill-progress-bar">
+                                        <div class="skill-progress-fill" style="width: 88%;"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-progress-item">
+                                    <div class="skill-progress-label">
+                                        <span>AI 서비스 구현</span>
+                                        <span>82%</span>
+                                    </div>
+                                    <div class="skill-progress-bar">
+                                        <div class="skill-progress-fill" style="width: 82%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 협업툴 -->
+                <div class="skill-content" id="collaboration">
+                    <div class="skill-video-section">
+                        <div class="skill-video-container">
+                            <div class="skill-video-placeholder">
+                                <div>실시간 협업 플랫폼</div>
+                                <div class="video-play-button"></div>
+                                <div class="auto-play-indicator">
+                                    <div class="auto-play-dot"></div>
+                                    자동 재생 중
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-details">
+                            <h3>🤝 협업툴 전문 개발</h3>
+                            <p>실시간 협업 기능과 사용자 중심의 인터페이스로 팀 생산성을 극대화합니다.</p>
+                            <ul class="skill-features">
+                                <li>실시간 채팅 시스템</li>
+                                <li>동시 편집 기능 구현</li>
+                                <li>프로젝트 관리 도구</li>
+                                <li>태스크 트래킹 시스템</li>
+                                <li>팀 커뮤니케이션 최적화</li>
+                            </ul>
+                            <div class="skill-progress">
+                                <div class="skill-progress-item">
+                                    <div class="skill-progress-label">
+                                        <span>실시간 시스템</span>
+                                        <span>85%</span>
+                                    </div>
+                                    <div class="skill-progress-bar">
+                                        <div class="skill-progress-fill" style="width: 85%;"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-progress-item">
+                                    <div class="skill-progress-label">
+                                        <span>UX/UI 설계</span>
+                                        <span>90%</span>
+                                    </div>
+                                    <div class="skill-progress-bar">
+                                        <div class="skill-progress-fill" style="width: 90%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 데이터베이스 -->
+                <div class="skill-content" id="database">
+                    <div class="skill-video-section">
+                        <div class="skill-video-container">
+                            <div class="skill-video-placeholder">
+                                <div>데이터베이스 설계</div>
+                                <div class="video-play-button"></div>
+                                <div class="auto-play-indicator">
+                                    <div class="auto-play-dot"></div>
+                                    자동 재생 중
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-details">
+                            <h3>🗄️ 데이터베이스 전문성</h3>
+                            <p>효율적인 데이터 구조 설계와 무결성 보장으로 안정적인 데이터 관리를 제공합니다.</p>
+                            <ul class="skill-features">
+                                <li>관계형 데이터베이스 설계</li>
+                                <li>트랜잭션 관리 및 동시성 제어</li>
+                                <li>인덱스 최적화 및 쿼리 튜닝</li>
+                                <li>데이터 무결성 보장</li>
+                                <li>백업 및 복구 전략</li>
+                            </ul>
+                            <div class="skill-progress">
+                                <div class="skill-progress-item">
+                                    <div class="skill-progress-label">
+                                        <span>SQL</span>
+                                        <span>88%</span>
+                                    </div>
+                                    <div class="skill-progress-bar">
+                                        <div class="skill-progress-fill" style="width: 88%;"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-progress-item">
+                                    <div class="skill-progress-label">
+                                        <span>DB 설계</span>
+                                        <span>85%</span>
+                                    </div>
+                                    <div class="skill-progress-bar">
+                                        <div class="skill-progress-fill" style="width: 85%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1031,6 +1430,63 @@
                 title.style.animationDelay = '0.3s';
                 subtitle.style.animationDelay = '0.6s';
             }
+        });
+
+         // 탭 전환 기능
+        document.querySelectorAll('.skill-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                
+                // 모든 탭 비활성화
+                document.querySelectorAll('.skill-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.skill-content').forEach(c => c.classList.remove('active'));
+                
+                // 클릭한 탭 활성화
+                this.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // 자동 전환 기능
+        let currentTabIndex = 0;
+        const tabs = document.querySelectorAll('.skill-tab');
+        const autoPlayInterval = 5000; // 5초마다 전환
+
+        function autoSwitchTab() {
+            currentTabIndex = (currentTabIndex + 1) % tabs.length;
+            tabs[currentTabIndex].click();
+        }
+
+        // 자동 전환 시작
+        let autoPlay = setInterval(autoSwitchTab, autoPlayInterval);
+
+        // 사용자가 탭을 클릭하면 자동 전환 중지하고 다시 시작
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                clearInterval(autoPlay);
+                currentTabIndex = Array.from(tabs).indexOf(this);
+                autoPlay = setInterval(autoSwitchTab, autoPlayInterval);
+            });
+        });
+
+        // 프로그레스 바 애니메이션
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressBars = entry.target.querySelectorAll('.skill-progress-fill');
+                    progressBars.forEach(bar => {
+                        const width = bar.style.width;
+                        bar.style.width = '0%';
+                        setTimeout(() => {
+                            bar.style.width = width;
+                        }, 500);
+                    });
+                }
+            });
+        });
+
+        document.querySelectorAll('.skill-content').forEach(content => {
+            observer.observe(content);
         });
     </script>
 </body>
