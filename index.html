@@ -1355,20 +1355,6 @@
             });
         });
 
-        // 스크롤 애니메이션
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in-up');
-                }
-            });
-        }, observerOptions);
-
         // 애니메이션 대상 요소들 관찰
         document.querySelectorAll('.project-card, .skill-category').forEach(el => {
             observer.observe(el);
