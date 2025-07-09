@@ -1455,25 +1455,7 @@
             });
         });
 
-        // 프로그레스 바 애니메이션
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const progressBars = entry.target.querySelectorAll('.skill-progress-fill');
-                    progressBars.forEach(bar => {
-                        const width = bar.style.width;
-                        bar.style.width = '0%';
-                        setTimeout(() => {
-                            bar.style.width = width;
-                        }, 500);
-                    });
-                }
-            });
-        });
-
-        document.querySelectorAll('.skill-content').forEach(content => {
-            observer.observe(content);
-        });
+    
     </script>
 </body>
 </html>
