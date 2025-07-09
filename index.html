@@ -812,3 +812,226 @@
                     <li class="skill-item">
                         <strong>시장 분석 능력</strong>
                         <p>
+<p>트렌드 예측 및 시장 기회 포착을 통한 비즈니스 성과 창출</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <h3>💼 비즈니스 역량</h3>
+                <ul class="skill-list">
+                    <li class="skill-item">
+                        <strong>창업가 정신</strong>
+                        <p>경남 청년 창업아카데미 선정, 아이디어 구현 및 프로토타입 개발</p>
+                    </li>
+                    <li class="skill-item">
+                        <strong>트렌드 예측</strong>
+                        <p>헬스케어 및 협업툴 시장 트렌드 분석 및 기회 포착</p>
+                    </li>
+                    <li class="skill-item">
+                        <strong>프로젝트 관리</strong>
+                        <p>일정 관리, 품질 보증, 팀 협업을 통한 성공적인 프로젝트 완수</p>
+                    </li>
+                    <li class="skill-item">
+                        <strong>문제 해결</strong>
+                        <p>복잡한 기술적 문제를 체계적으로 분석하고 해결하는 능력</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <h3>🎯 Flow 핵심 가치 연결</h3>
+                <ul class="skill-list">
+                    <li class="skill-item">
+                        <strong>연결의 힘</strong>
+                        <p>AI와 협업툴의 융합을 통한 새로운 가치 창출</p>
+                    </li>
+                    <li class="skill-item">
+                        <strong>사용자 중심</strong>
+                        <p>인간의 심리적 요소를 고려한 직관적 UX 설계</p>
+                    </li>
+                    <li class="skill-item">
+                        <strong>혁신적 사고</strong>
+                        <p>기존 협업툴의 한계를 뛰어넘는 창의적 해결책 도출</p>
+                    </li>
+                    <li class="skill-item">
+                        <strong>미래 지향</strong>
+                        <p>AI 시대에 맞는 차세대 협업 플랫폼 비전 제시</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="contact-content">
+                <div class="section-title">
+                    <h2>함께 만들어가요</h2>
+                    <p><span class="flow-accent">Flow</span>와 함께 협업의 미래를 만들어가고 싶습니다. 언제든지 연락주세요!</p>
+                </div>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">📧</div>
+                        <div>
+                            <strong>이메일</strong>
+                            <p>your.email@example.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📱</div>
+                        <div>
+                            <strong>전화</strong>
+                            <p>010-1234-5678</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">💼</div>
+                        <div>
+                            <strong>LinkedIn</strong>
+                            <p>linkedin.com/in/yourprofile</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">🐱</div>
+                        <div>
+                            <strong>GitHub</strong>
+                            <p>github.com/yourusername</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 개발자 포트폴리오. Flow와 함께 협업의 미래를 만들어가겠습니다.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 부드러운 스크롤 네비게이션
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                
+                // 활성 네비게이션 업데이트
+                document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // 스크롤 시 네비게이션 활성화
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // 스크롤 애니메이션
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        // 애니메이션 대상 요소들 관찰
+        document.querySelectorAll('.project-card, .skill-category').forEach(el => {
+            observer.observe(el);
+        });
+
+        // 헤더 CTA 버튼 스크롤 효과
+        document.querySelector('.cta-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('projects').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        });
+
+        // 프로젝트 카드 호버 효과 개선
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // 스킬 카테고리 순차 애니메이션
+        setTimeout(() => {
+            document.querySelectorAll('.skill-category').forEach((category, index) => {
+                setTimeout(() => {
+                    category.style.opacity = '0';
+                    category.style.transform = 'translateY(30px)';
+                    category.style.transition = 'all 0.6s ease';
+                    
+                    setTimeout(() => {
+                        category.style.opacity = '1';
+                        category.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 200);
+            });
+        }, 1000);
+
+        // 연락처 항목 호버 효과
+        document.querySelectorAll('.contact-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-4px) scale(1.02)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // 페이지 로드 시 타이틀 애니메이션
+        window.addEventListener('load', function() {
+            const title = document.querySelector('.animated-title');
+            const subtitle = document.querySelector('.animated-subtitle');
+            
+            if (title && subtitle) {
+                title.style.animationDelay = '0.3s';
+                subtitle.style.animationDelay = '0.6s';
+            }
+        });
+    </script>
+</body>
+</html>
