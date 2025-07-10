@@ -7,6 +7,41 @@
     <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
 
+        .github-link {
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.github-link:hover {
+    color: var(--flow-accent);
+    border-bottom-color: var(--flow-accent);
+    transform: translateY(-1px);
+}
+
+.contact-item {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+/* 텍스트 가독성 개선 */
+.contact-section .section-title p {
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 500;
+}
+
+.contact-section .section-title .flow-accent {
+    color: var(--secondary-color);
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+}
+        
         /* 인터랙티브 스킬 섹션 CSS - 기존 스타일 태그 안에 추가 */
         
         /* 메인 스킬 섹션 */
@@ -1263,39 +1298,34 @@
     </section>
 
     <section id="contact" class="contact-section">
-        <div class="container">
-            <div class="contact-content">
-                <div class="section-title">
-                    <h2>함께 만들어가요</h2>
-                    <p><span class="flow-accent">동료</span>와 함께 협업의 미래를 만들어가고 싶습니다. 언제든지 연락주세요!</p>
+    <div class="container">
+        <div class="contact-content">
+            <div class="section-title">
+                <h2>함께 만들어가요</h2>
+                <p><span class="flow-accent">Flow</span>와 함께 협업의 미래를 만들어가고 싶습니다. 언제든지 연락주세요!</p>
+            </div>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div>
+                        <strong>이메일</strong>
+                        <p>lco2009d@naver.com</p>
+                    </div>
                 </div>
                 
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <div class="contact-icon">📧</div>
-                        <div>
-                            <strong>이메일</strong>
-                            <p>lco2009d@naver.com</p>
-                        </div>
-                    </div>
-                
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">💼</div>
-                    
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">🐱</div>
-                        <div>
-                            <strong>GitHub</strong>
-                            <p>https://github.com/gogoleelee88</p>
-                        </div>
+                <div class="contact-item">
+                    <div class="contact-icon">🐱</div>
+                    <div>
+                        <strong>GitHub</strong>
+                        <p><a href="https://github.com/gogoleelee88" target="_blank" class="github-link">gogoleelee88</a></p>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
+    </div>
+</section>
+    
     <footer>
         <div class="container">
             <div class="footer-content">
