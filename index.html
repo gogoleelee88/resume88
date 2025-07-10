@@ -214,12 +214,12 @@
             overflow: hidden;
         }
 
-        .skill-progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
-            border-radius: 4px;
-            transition: width 1s ease-out;
-        }
+      .skill-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+    border-radius: 4px;
+    transition: width 1.5s ease-out; /* 1s에서 1.5s로 변경 */
+}
 
         /* 자동 재생 표시기 */
         .auto-play-indicator {
@@ -1355,10 +1355,6 @@
             });
         });
 
-        // 애니메이션 대상 요소들 관찰
-        document.querySelectorAll('.project-card, .skill-category').forEach(el => {
-            observer.observe(el);
-        });
 
         // 헤더 CTA 버튼 스크롤 효과
         document.querySelector('.cta-button').addEventListener('click', function(e) {
@@ -1454,7 +1450,35 @@
                 autoPlay = setInterval(autoSwitchTab, autoPlayInterval);
             });
         });
+// 스킬 프로그레스 바 애니메이션
+function animateProgressBars() {
+    const activeContent = document.querySelector('.skill-content.active');
+    if (activeContent) {
+        const progressFills = activeContent.querySelectorAll('.skill-progress-fill');
+        progressFills.forEach(fill => {
+            fill.style.width = '0%';
+            setTimeout(() => {
+                fill.style.width = fill.getAttribute('style').match(/width:\s*(\d+%)/)[1];
+            }, 300);
+        });
+    }
+}
 
+// 탭 전환 시 프로그레스 바 애니메이션 실행
+document.querySelectorAll('.skill-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+        setTimeout(() => {
+            animateProgressBars();
+        }, 100);
+    });
+});
+
+// 페이지 로드 시 첫 번째 탭 애니메이션
+window.addEventListener('load', function() {
+    setTimeout(() => {
+        animateProgressBars();
+    }, 500);
+});
     
     </script>
 </body>
