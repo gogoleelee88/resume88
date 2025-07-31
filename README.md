@@ -4,7 +4,7 @@
 - 제작 진행 중
 - 열람 가능: [사이트 바로가기](https://gogoleelee88.github.io/resume88/)
   
-![제목 없는 동영상 - Clipchamp로 제작](https://github.com/user-attachments/assets/f4ae9097-4f31-4c79-b5b7-e10c62f4d2a8)
+![제목 없는 동영상 - Clipchamp로 제작]()
 ## 개요
 협업툴 일부 클론 
 
