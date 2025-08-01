@@ -46,6 +46,7 @@
 
         const ProjectManagementSystem = () => {
             const [currentView, setCurrentView] = useState('dashboard');
+            const [showMaintenanceModal, setShowMaintenanceModal] = useState(true); 
             const [projects, setProjects] = useState([]);
             const [selectedDate, setSelectedDate] = useState(new Date(2025, 6, 24));
             const [currentWidget, setCurrentWidget] = useState(0);
@@ -157,6 +158,71 @@ React.useEffect(() => {
                     setCurrentView('taskList');
                 }
             };
+
+// 모달 렌더링 함수 (다른 함수들과 함께 추가)
+const renderMaintenanceModal = () => {
+    if (!showMaintenanceModal) return null;
+    
+    return (
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+            <div className="bg-white rounded-3xl p-10 max-w-md w-full mx-4 text-center relative">
+                  <button 
+                    className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
+                    onClick={() => setShowMaintenanceModal(false)}
+                >
+                    ✕
+                </button>
+                {/* 상단 컬러 도트들 */}
+                <div className="flex justify-center gap-2 mb-8">
+                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
+                </div>
+                
+                <h1 className="text-3xl font-bold text-gray-800 mb-2">포트폴리오</h1>
+                <h2 className="text-xl font-semibold text-gray-800 mb-6">서버 업데이트 안내</h2>
+                
+                <p className="text-gray-600 mb-8">
+                    계속해서 기능 업데이트 중입니다.<br/>
+                    더 나은 서비스를 제공하기 위해 노력하고 있습니다.
+                </p>
+                
+                <div className="bg-gray-100 rounded-2xl p-6 mb-8">
+                    <div className="font-semibold text-gray-800 mb-4">업데이트 기간: 2025.08.01(일) 10시~</div>
+                    <div className="text-sm text-gray-600 mb-4">
+                        업데이트 동안 포트폴리오에 기능이 추가됩니다.<br/>
+                        일부 기능이 동작하지 않아도 조금만 기다려주세요!
+                    </div>
+                    
+                    <div className="text-left">
+                        <div className="text-purple-600 font-semibold mb-2">🚀 사용가능 기능들:</div>
+                        <ul className="text-sm text-gray-700 space-y-1">
+                            <li>• 프로젝트 생성 및 관리</li>
+                            <li>• 일정 관리 시스템</li>
+                            <li>• AI 협업툴 개발 일지 블로그 연동</li>
+                            <li>• 화상채팅 및 AI요약 업무 분담(블로그에 있음 추가 중)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <button 
+                    className="w-full bg-gradient-to-r from-purple-500 to-blue-500 text-white py-4 rounded-full font-semibold mb-4 hover:opacity-90 transition-all"
+                    onClick={() => setShowMaintenanceModal(false)}
+                >
+                    이제 포트폴리오 보기 →
+                </button>
+                
+                <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
+                    <input type="checkbox" id="noShowToday" className="rounded"/>
+                    <label htmlFor="noShowToday" className="cursor-pointer">다시 보지 않기</label>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 
             const categories = ['피드', '업무', '간트차트', '캘린더', '파일'];
 
@@ -329,7 +395,7 @@ React.useEffect(() => {
 </div>
 
                             {/* 상단 아이콘 섹션 */}
-                          {/* 상단 아이콘 섹션 */}
+                         
 <div className="flex gap-10 my-8 flex-wrap">
     <div className="flex flex-col items-center cursor-pointer hover:-translate-y-1 transition-transform" onClick={() => setCurrentView('portfolio')}>
         <div className="w-14 h-14 bg-white rounded-lg flex items-center justify-center mb-3 shadow-lg hover:shadow-xl transition-shadow text-2xl">
@@ -569,6 +635,7 @@ React.useEffect(() => {
                                 </div>
                             </div>
                         </main>
+                          {renderMaintenanceModal()}
                     </div>
                 );
             }
@@ -611,6 +678,7 @@ React.useEffect(() => {
                                 대시보드로 돌아가기
                             </button>
                         </div>
+                          
                     </div>
                 );
             }
